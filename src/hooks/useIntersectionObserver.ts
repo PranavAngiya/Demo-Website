@@ -6,7 +6,7 @@ interface UseIntersectionObserverOptions extends IntersectionObserverInit {
 
 export function useIntersectionObserver(
   options: UseIntersectionObserverOptions = {}
-): [React.RefObject<HTMLDivElement>, boolean] {
+): [React.RefObject<HTMLDivElement | null>, boolean] {
   const { threshold = 0.1, root = null, rootMargin = '0px', freezeOnceVisible = false } = options;
 
   const elementRef = useRef<HTMLDivElement>(null);

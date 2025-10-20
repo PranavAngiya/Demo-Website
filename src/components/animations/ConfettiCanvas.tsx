@@ -20,7 +20,7 @@ interface ConfettiCanvasProps {
 const ConfettiCanvas = ({ active = false, duration = 3000, onComplete }: ConfettiCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const confettiRef = useRef<Confetti[]>([]);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number>(0);
   const startTimeRef = useRef<number>(0);
 
   useEffect(() => {

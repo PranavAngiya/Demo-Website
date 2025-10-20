@@ -141,17 +141,13 @@ export function prefersReducedMotion(): boolean {
  * Check if user is using keyboard navigation
  */
 export function detectKeyboardUser(): void {
-  let isUsingKeyboard = false;
-
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Tab') {
-      isUsingKeyboard = true;
       document.body.classList.add('keyboard-user');
     }
   });
 
   document.addEventListener('mousedown', () => {
-    isUsingKeyboard = false;
     document.body.classList.remove('keyboard-user');
   });
 }

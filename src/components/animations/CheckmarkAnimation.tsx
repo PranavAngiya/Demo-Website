@@ -18,7 +18,7 @@ const CheckmarkAnimation = ({
       opacity: 1,
       transition: {
         duration: duration * 0.4,
-        ease: [0.34, 1.56, 0.64, 1] // Elastic ease
+        ease: [0.34, 1.56, 0.64, 1] as any // Elastic ease
       }
     }
   };
@@ -31,7 +31,7 @@ const CheckmarkAnimation = ({
       transition: {
         duration: duration * 0.6,
         delay: duration * 0.3,
-        ease: 'easeOut'
+        ease: 'easeOut' as any
       }
     }
   };
@@ -42,7 +42,7 @@ const CheckmarkAnimation = ({
       animate={{ scale: 1 }}
       transition={{
         duration: duration * 0.3,
-        ease: [0.34, 1.56, 0.64, 1]
+        ease: [0.34, 1.56, 0.64, 1] as any
       }}
       style={{ width: size, height: size }}
     >

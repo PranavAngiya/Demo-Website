@@ -26,7 +26,7 @@ const NumberCounter = ({
 }: NumberCounterProps) => {
   const [count, setCount] = useState(start);
   const startTimeRef = useRef<number | null>(null);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number>(0);
 
   useEffect(() => {
     const animate = (timestamp: number) => {

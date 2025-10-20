@@ -111,8 +111,6 @@ const FAQ = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               icon={<Search className="w-5 h-5" />}
-              clearable
-              onClear={() => setSearchQuery('')}
               className="text-lg"
             />
           </Card>

@@ -18,7 +18,6 @@ import Badge from '../components/ui/Badge';
 import ProgressBar from '../components/ui/ProgressBar';
 import { useToast } from '../context/ToastContext';
 import ConfettiCanvas from '../components/animations/ConfettiCanvas';
-import CheckmarkAnimation from '../components/animations/CheckmarkAnimation';
 
 // Sample lesson content (in real app, this would come from API/CMS)
 const lessonContent: { [key: string]: any } = {
@@ -127,7 +126,6 @@ const LessonDetail = () => {
   const [currentSection, setCurrentSection] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState<{ [key: number]: number }>({});
   const [showResults, setShowResults] = useState(false);
-  const [lessonProgress, setLessonProgress] = useState(lesson?.progress || 0);
   const [showConfetti, setShowConfetti] = useState(false);
 
   // Reset state when lesson changes
@@ -135,8 +133,7 @@ const LessonDetail = () => {
     setCurrentSection(0);
     setQuizAnswers({});
     setShowResults(false);
-    setLessonProgress(lesson?.progress || 0);
-  }, [lessonId, lesson?.progress]);
+  }, [lessonId]);
 
   useEffect(() => {
     if (!lesson || !content) {
@@ -163,10 +160,6 @@ const LessonDetail = () => {
   const handleNext = () => {
     if (currentSection < totalSections - 1) {
       setCurrentSection(prev => prev + 1);
-      
-      // Update progress
-      const newProgress = Math.round(((currentSection + 2) / totalSections) * 100);
-      setLessonProgress(newProgress);
     } else {
       // Only auto-complete for text lessons
       // Quizzes need explicit Submit Quiz button
@@ -190,7 +183,6 @@ const LessonDetail = () => {
     setShowResults(true);
     const score = calculateScore();
     const percentage = Math.round((score / content.questions.length) * 100);
-    setLessonProgress(percentage);
     
     // Perfect score = confetti! 🎉
     if (percentage === 100) {
@@ -399,7 +391,6 @@ const LessonDetail = () => {
       );
     }
     
-    const hasAnswered = quizAnswers[currentSection] !== undefined;
     const allAnswered = content.questions.every((_: any, i: number) => quizAnswers[i] !== undefined);
     
     return (

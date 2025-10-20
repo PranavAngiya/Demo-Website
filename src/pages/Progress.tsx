@@ -25,7 +25,6 @@ const Progress = () => {
   const { achievements, userProgress, levels, challenges } = achievementsData;
   
   const currentLevel = levels.find(l => l.level === userProgress.level);
-  const nextLevel = levels.find(l => l.level === userProgress.level + 1);
   
   const iconMap: { [key: string]: any } = {
     Trophy,
