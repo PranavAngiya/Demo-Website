@@ -1,0 +1,183 @@
+{
+  "achievements": [
+    {
+      "id": "first-lesson",
+      "title": "First Steps",
+      "description": "Complete your first lesson",
+      "icon": "GraduationCap",
+      "category": "learning",
+      "points": 50,
+      "unlocked": true,
+      "unlockedDate": "2024-10-15",
+      "rarity": "common"
+    },
+    {
+      "id": "quiz-master",
+      "title": "Quiz Master",
+      "description": "Score 100% on any quiz",
+      "icon": "Trophy",
+      "category": "mastery",
+      "points": 100,
+      "unlocked": false,
+      "unlockedDate": null,
+      "rarity": "rare"
+    },
+    {
+      "id": "week-streak",
+      "title": "Committed Learner",
+      "description": "Maintain a 7-day learning streak",
+      "icon": "Flame",
+      "category": "dedication",
+      "points": 150,
+      "unlocked": false,
+      "unlockedDate": null,
+      "rarity": "rare"
+    },
+    {
+      "id": "early-bird",
+      "title": "Early Bird",
+      "description": "Complete a lesson before 9 AM",
+      "icon": "Sunrise",
+      "category": "dedication",
+      "points": 75,
+      "unlocked": true,
+      "unlockedDate": "2024-10-18",
+      "rarity": "common"
+    },
+    {
+      "id": "five-lessons",
+      "title": "Making Progress",
+      "description": "Complete 5 lessons",
+      "icon": "Target",
+      "category": "learning",
+      "points": 200,
+      "unlocked": false,
+      "unlockedDate": null,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "all-lessons",
+      "title": "Super Scholar",
+      "description": "Complete all 10 lessons",
+      "icon": "Award",
+      "category": "learning",
+      "points": 500,
+      "unlocked": false,
+      "unlockedDate": null,
+      "rarity": "legendary"
+    },
+    {
+      "id": "perfect-week",
+      "title": "Perfect Week",
+      "description": "Score 100% on all quizzes in one week",
+      "icon": "Star",
+      "category": "mastery",
+      "points": 300,
+      "unlocked": false,
+      "unlockedDate": null,
+      "rarity": "epic"
+    },
+    {
+      "id": "speed-learner",
+      "title": "Speed Learner",
+      "description": "Complete 3 lessons in one day",
+      "icon": "Zap",
+      "category": "dedication",
+      "points": 150,
+      "unlocked": false,
+      "unlockedDate": null,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "helpful-member",
+      "title": "Helpful Member",
+      "description": "Rate 10 FAQs as helpful",
+      "icon": "ThumbsUp",
+      "category": "community",
+      "points": 100,
+      "unlocked": false,
+      "unlockedDate": null,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "knowledge-seeker",
+      "title": "Knowledge Seeker",
+      "description": "Read 20 FAQ articles",
+      "icon": "BookOpen",
+      "category": "learning",
+      "points": 100,
+      "unlocked": false,
+      "unlockedDate": null,
+      "rarity": "common"
+    },
+    {
+      "id": "comeback-kid",
+      "title": "Comeback Kid",
+      "description": "Retake and pass a failed quiz",
+      "icon": "RefreshCw",
+      "category": "perseverance",
+      "points": 125,
+      "unlocked": false,
+      "unlockedDate": null,
+      "rarity": "uncommon"
+    },
+    {
+      "id": "month-streak",
+      "title": "Dedicated Scholar",
+      "description": "Maintain a 30-day learning streak",
+      "icon": "Calendar",
+      "category": "dedication",
+      "points": 500,
+      "unlocked": false,
+      "unlockedDate": null,
+      "rarity": "legendary"
+    }
+  ],
+  "userProgress": {
+    "totalPoints": 125,
+    "level": 2,
+    "currentStreak": 3,
+    "longestStreak": 5,
+    "lessonsCompleted": 1,
+    "quizzesPassed": 0,
+    "perfectScores": 0,
+    "faqsRead": 8,
+    "faqsRated": 3,
+    "lastActivityDate": "2024-10-20",
+    "joinDate": "2024-10-15",
+    "pointsToNextLevel": 75,
+    "nextLevelAt": 200
+  },
+  "levels": [
+    { "level": 1, "name": "Beginner", "minPoints": 0, "maxPoints": 99, "color": "gray" },
+    { "level": 2, "name": "Learner", "minPoints": 100, "maxPoints": 299, "color": "blue" },
+    { "level": 3, "name": "Explorer", "minPoints": 300, "maxPoints": 599, "color": "green" },
+    { "level": 4, "name": "Scholar", "minPoints": 600, "maxPoints": 999, "color": "purple" },
+    { "level": 5, "name": "Expert", "minPoints": 1000, "maxPoints": 1999, "color": "orange" },
+    { "level": 6, "name": "Master", "minPoints": 2000, "maxPoints": 9999, "color": "gold" }
+  ],
+  "challenges": [
+    {
+      "id": "weekly-1",
+      "title": "This Week's Challenge",
+      "description": "Complete 2 more lessons",
+      "type": "weekly",
+      "progress": 1,
+      "target": 3,
+      "reward": 150,
+      "expiresAt": "2024-10-27",
+      "completed": false
+    },
+    {
+      "id": "daily-1",
+      "title": "Daily Goal",
+      "description": "Spend 15 minutes learning",
+      "type": "daily",
+      "progress": 8,
+      "target": 15,
+      "reward": 25,
+      "expiresAt": "2024-10-20",
+      "completed": false
+    }
+  ]
+}

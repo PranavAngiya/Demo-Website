@@ -1,0 +1,142 @@
+{
+  "lessons": [
+    {
+      "id": "lesson-001",
+      "number": 1,
+      "title": "Understanding Superannuation",
+      "description": "Learn the basics of super and how it works for your retirement",
+      "icon": "GraduationCap",
+      "gradient": "from-blue-500 to-cyan-500",
+      "duration": "8 min",
+      "topics": ["Super Basics", "How Super Works", "Your Super Balance"],
+      "isUnlocked": true,
+      "progress": 100,
+      "completed": true
+    },
+    {
+      "id": "lesson-002",
+      "number": 2,
+      "title": "Making Contributions",
+      "description": "Discover how to boost your super with smart contributions",
+      "icon": "DollarSign",
+      "gradient": "from-green-500 to-emerald-500",
+      "duration": "10 min",
+      "topics": ["Concessional", "Non-Concessional", "Salary Sacrifice"],
+      "isUnlocked": true,
+      "progress": 65,
+      "completed": false
+    },
+    {
+      "id": "lesson-003",
+      "number": 3,
+      "title": "Investment Options",
+      "description": "Choose the right investment strategy for your goals",
+      "icon": "TrendingUp",
+      "gradient": "from-purple-500 to-pink-500",
+      "duration": "12 min",
+      "topics": ["Risk Profiles", "Asset Allocation", "Growth vs Conservative"],
+      "isUnlocked": true,
+      "progress": 0,
+      "completed": false
+    },
+    {
+      "id": "lesson-004",
+      "number": 4,
+      "title": "Understanding Fees",
+      "description": "Learn how fees impact your retirement savings over time",
+      "icon": "Receipt",
+      "gradient": "from-orange-500 to-red-500",
+      "duration": "7 min",
+      "topics": ["Admin Fees", "Investment Fees", "Fee Comparison"],
+      "isUnlocked": false,
+      "progress": 0,
+      "completed": false
+    },
+    {
+      "id": "lesson-005",
+      "number": 5,
+      "title": "Insurance in Super",
+      "description": "Protect yourself and your family with the right cover",
+      "icon": "Shield",
+      "gradient": "from-indigo-500 to-purple-500",
+      "duration": "9 min",
+      "topics": ["Death Cover", "TPD", "Income Protection"],
+      "isUnlocked": false,
+      "progress": 0,
+      "completed": false
+    },
+    {
+      "id": "lesson-006",
+      "number": 6,
+      "title": "Accessing Your Super",
+      "description": "Know when and how you can access your retirement savings",
+      "icon": "Unlock",
+      "gradient": "from-teal-500 to-green-500",
+      "duration": "8 min",
+      "topics": ["Preservation Age", "Retirement", "Early Release"],
+      "isUnlocked": false,
+      "progress": 0,
+      "completed": false
+    },
+    {
+      "id": "lesson-007",
+      "number": 7,
+      "title": "Tax & Super",
+      "description": "Understand how tax works with your superannuation",
+      "icon": "Calculator",
+      "gradient": "from-yellow-500 to-orange-500",
+      "duration": "11 min",
+      "topics": ["Contribution Tax", "Investment Tax", "Withdrawal Tax"],
+      "isUnlocked": false,
+      "progress": 0,
+      "completed": false
+    },
+    {
+      "id": "lesson-008",
+      "number": 8,
+      "title": "Retirement Planning",
+      "description": "Create a plan to achieve your retirement dreams",
+      "icon": "Target",
+      "gradient": "from-pink-500 to-rose-500",
+      "duration": "15 min",
+      "topics": ["Retirement Goals", "Income Streams", "Budgeting"],
+      "isUnlocked": false,
+      "progress": 0,
+      "completed": false
+    },
+    {
+      "id": "lesson-009",
+      "number": 9,
+      "title": "Estate Planning",
+      "description": "Ensure your super goes to the right people",
+      "icon": "FileText",
+      "gradient": "from-slate-500 to-gray-600",
+      "duration": "9 min",
+      "topics": ["Beneficiaries", "Binding Nominations", "Estate Strategy"],
+      "isUnlocked": false,
+      "progress": 0,
+      "completed": false
+    },
+    {
+      "id": "lesson-010",
+      "number": 10,
+      "title": "Advanced Strategies",
+      "description": "Master advanced techniques to maximize your super",
+      "icon": "Lightbulb",
+      "gradient": "from-amber-500 to-yellow-500",
+      "duration": "14 min",
+      "topics": ["Transition to Retirement", "Contribution Splitting", "Recontribution Strategy"],
+      "isUnlocked": false,
+      "progress": 0,
+      "completed": false
+    }
+  ],
+  "userProgress": {
+    "completedLessons": 1,
+    "totalLessons": 10,
+    "overallProgress": 16.5,
+    "currentLesson": "lesson-002",
+    "lastAccessedDate": "2024-10-20",
+    "timeSpent": 135
+  }
+}
