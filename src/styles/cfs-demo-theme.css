@@ -1,0 +1,167 @@
+/**
+ * CFS_Demo Theme Integration
+ * Additional styles from CFS_Demo design system
+ */
+
+/* Import Google Fonts - Source Sans 3 & IBM Plex Mono */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
+
+/* Glassmorphism utilities */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-card-dark {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* CFS_Demo gradient backgrounds */
+.bg-brand-gradient {
+  background: linear-gradient(135deg, #0c4a6e 0%, #2d9cdb 100%);
+}
+
+.bg-brand-gradient-soft {
+  background: linear-gradient(135deg, #e0f2fe 0%, #ffffff 100%);
+}
+
+.bg-brand-gradient-deep {
+  background: linear-gradient(135deg, #082f49 0%, #0c4a6e 100%);
+}
+
+/* Gradient text */
+.text-brand-gradient {
+  background: linear-gradient(135deg, #0c4a6e 0%, #2d9cdb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* CFS_Demo card styles */
+.cfs-card {
+  background: var(--surface-default, #ffffff);
+  border-radius: 24px;
+  box-shadow: 0 18px 40px -24px rgba(15, 23, 42, 0.35);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cfs-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 48px -20px rgba(15, 23, 42, 0.4);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .cfs-card {
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .glass-card {
+    background: rgba(15, 23, 42, 0.6);
+  }
+}
+
+/* Smooth scrollbar styling (CFS_Demo style) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f7fa;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5f5;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2d9cdb;
+}
+
+/* Dark mode scrollbar */
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-track {
+    background: #0f172a;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #475569;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2d9cdb;
+  }
+}
+
+/* CFS_Demo button enhancements */
+.btn-cfs-primary {
+  background: #0c4a6e;
+  color: white;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(12, 74, 110, 0.3);
+}
+
+.btn-cfs-primary:hover {
+  background: #2d9cdb;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(45, 156, 219, 0.4);
+}
+
+.btn-cfs-secondary {
+  background: #e0f2fe;
+  color: #0c4a6e;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-cfs-secondary:hover {
+  background: #2d9cdb;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, a, input, select, textarea {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Focus styles for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #2d9cdb;
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

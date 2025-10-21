@@ -39,9 +39,9 @@ const Dashboard = () => {
 
   // Asset allocation data
   const assetData = [
-    { name: 'Superannuation', value: user.products[0].balance, color: '#D81421' },
-    { name: 'Growth Fund', value: user.products[1].balance, color: '#005847' },
-    { name: 'Conservative Fund', value: user.products[2].balance, color: '#3b82f6' },
+    { name: 'Superannuation', value: user.products[0].balance, color: '#0c4a6e' },
+    { name: 'Growth Fund', value: user.products[1].balance, color: '#2d9cdb' },
+    { name: 'Conservative Fund', value: user.products[2].balance, color: '#e0f2fe' },
   ];
 
   // Quick stats
@@ -52,9 +52,9 @@ const Dashboard = () => {
       change: '+8.2%',
       trend: 'up',
       icon: ArrowDownCircle,
-      color: 'from-green-500 to-emerald-600',
-      bgColor: 'bg-green-50',
-      textColor: 'text-green-700'
+      color: 'from-brand to-brand-accent',
+      bgColor: 'bg-brand-soft/30',
+      textColor: 'text-brand'
     },
     {
       label: 'Investment Returns',
@@ -62,9 +62,9 @@ const Dashboard = () => {
       change: '+12.5%',
       trend: 'up',
       icon: TrendingUp,
-      color: 'from-blue-500 to-cyan-600',
-      bgColor: 'bg-blue-50',
-      textColor: 'text-blue-700'
+      color: 'from-brand-accent to-brand-deep',
+      bgColor: 'bg-brand-soft/50',
+      textColor: 'text-brand'
     },
     {
       label: 'Monthly Growth',
@@ -72,9 +72,9 @@ const Dashboard = () => {
       change: '+3.1%',
       trend: 'up',
       icon: ArrowUpRight,
-      color: 'from-purple-500 to-pink-600',
-      bgColor: 'bg-purple-50',
-      textColor: 'text-purple-700'
+      color: 'from-brand-deep to-brand',
+      bgColor: 'bg-brand-soft/40',
+      textColor: 'text-brand-accent'
     },
   ];
 
@@ -110,19 +110,19 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-pink-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
       <div className="container mx-auto px-4 py-8 space-y-8">
         
-        {/* Hero Section - Colorful Gradient */}
+        {/* Hero Section - CFS_Demo Gradient */}
         <motion.section
-          className="relative overflow-hidden rounded-3xl p-8 md:p-12 bg-gradient-to-br from-violet-600 via-fuchsia-600 to-pink-600 text-white shadow-2xl"
+          className="relative overflow-hidden rounded-3xl p-8 md:p-12 bg-gradient-to-br from-brand via-brand-accent to-brand-deep text-white shadow-soft"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
         >
           {/* Animated Gradient Orbs */}
           <motion.div
-            className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-yellow-400/30 to-orange-500/30 rounded-full blur-3xl"
+            className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-brand-soft/40 to-brand-accent/30 rounded-full blur-3xl"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.3, 0.5, 0.3],
@@ -134,7 +134,7 @@ const Dashboard = () => {
             }}
           />
           <motion.div
-            className="absolute bottom-0 left-0 w-72 h-72 bg-gradient-to-br from-blue-400/30 to-cyan-500/30 rounded-full blur-3xl"
+            className="absolute bottom-0 left-0 w-72 h-72 bg-gradient-to-br from-brand-accent/30 to-brand-deep/40 rounded-full blur-3xl"
             animate={{
               scale: [1.2, 1, 1.2],
               opacity: [0.5, 0.3, 0.5],
@@ -157,7 +157,7 @@ const Dashboard = () => {
                   <Award className="w-4 h-4 mr-1" />
                   {user.investmentLevel} Investor
                 </Badge>
-                <Badge variant="success" className="bg-emerald-800 text-white border-emerald-600 backdrop-blur-sm">
+                <Badge variant="success" className="bg-emerald-900 text-white border-emerald-600 backdrop-blur-sm">
                   <TrendingUp className="w-4 h-4 mr-1" />
                   Portfolio Growing
                 </Badge>
@@ -184,7 +184,7 @@ const Dashboard = () => {
                 ${user.portfolio.totalValue.toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </p>
               <div className="flex flex-wrap items-center gap-3">
-                <Badge variant="success" className="bg-emerald-800 text-white border-emerald-600 text-lg px-4 py-2">
+                <Badge variant="success" className="bg-emerald-900 text-white border-emerald-600 text-lg px-4 py-2">
                   <TrendingUp className="w-5 h-5 mr-2" />
                   +{user.portfolio.growthThisYear}% this year
                 </Badge>
@@ -236,7 +236,7 @@ const Dashboard = () => {
           >
             <Card variant="gradient" className="p-6 h-full border-2 border-gray-100">
               <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <div className="p-2 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg">
+                <div className="p-2 bg-gradient-to-br from-brand to-brand-accent rounded-lg">
                   <TrendingUp className="w-5 h-5 text-white" />
                 </div>
                 Portfolio Growth (2024)
@@ -245,8 +245,8 @@ const Dashboard = () => {
                 <LineChart data={portfolioData}>
                   <defs>
                     <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#D81421" stopOpacity={0.8}/>
-                      <stop offset="95%" stopColor="#D81421" stopOpacity={0.1}/>
+                      <stop offset="5%" stopColor="#0c4a6e" stopOpacity={0.8}/>
+                      <stop offset="95%" stopColor="#0c4a6e" stopOpacity={0.1}/>
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
@@ -264,10 +264,10 @@ const Dashboard = () => {
                   <Line 
                     type="monotone" 
                     dataKey="value" 
-                    stroke="#D81421" 
+                    stroke="#0c4a6e" 
                     strokeWidth={3}
                     fill="url(#colorValue)"
-                    dot={{ fill: '#D81421', r: 5 }}
+                    dot={{ fill: '#0c4a6e', r: 5 }}
                     activeDot={{ r: 7 }}
                   />
                 </LineChart>
@@ -283,7 +283,7 @@ const Dashboard = () => {
           >
             <Card variant="solid" className="p-6 h-full border-2 border-gray-100">
               <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <div className="p-2 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg">
+                <div className="p-2 bg-gradient-to-br from-brand-accent to-brand-deep rounded-lg">
                   <Target className="w-5 h-5 text-white" />
                 </div>
                 Asset Mix
@@ -341,7 +341,7 @@ const Dashboard = () => {
           >
             <Card variant="glass" className="p-6 border-2 border-gray-100">
               <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <div className="p-2 bg-gradient-to-br from-green-500 to-emerald-500 rounded-lg">
+                <div className="p-2 bg-gradient-to-br from-brand to-brand-deep rounded-lg">
                   <Briefcase className="w-5 h-5 text-white" />
                 </div>
                 Your Products
@@ -376,7 +376,7 @@ const Dashboard = () => {
           >
             <Card variant="solid" className="p-6 border-2 border-gray-100">
               <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <div className="p-2 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg">
+                <div className="p-2 bg-gradient-to-br from-brand-accent to-brand rounded-lg">
                   <Clock className="w-5 h-5 text-white" />
                 </div>
                 Recent Activity

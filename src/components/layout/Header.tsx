@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X, Home, HelpCircle, GraduationCap, User, Palette, Trophy } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, Home, HelpCircle, GraduationCap, User, Trophy, ArrowLeft, Headphones } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const { user } = useUser();
+  const location = useLocation();
+  
+  // Check if we're in the client portal
+  const isClientPortal = location.pathname.startsWith('/client');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,11 +24,11 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { name: 'Dashboard', path: '/', icon: Home },
-    { name: 'FAQ', path: '/faq', icon: HelpCircle },
-    { name: 'Tutor', path: '/tutor', icon: GraduationCap },
-    { name: 'Progress', path: '/progress', icon: Trophy },
-    { name: 'Components', path: '/components', icon: Palette },
+    { name: 'Dashboard', path: '/client/dashboard', icon: Home },
+    { name: 'FAQ', path: '/client/faq', icon: HelpCircle },
+    { name: 'Training Hub', path: '/client/training-hub', icon: GraduationCap },
+    { name: 'Customer Care', path: '/client/customer-care', icon: Headphones },
+    { name: 'Progress', path: '/client/progress', icon: Trophy },
   ];
 
   return (
@@ -39,8 +44,19 @@ const Header = () => {
     >
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
+          {/* Home button (only in Client portal) */}
+          {isClientPortal && (
+            <Link
+              to="/"
+              className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-700 hover:text-brand hover:bg-brand/5 transition-all duration-200 font-medium mr-2"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              <span className="hidden sm:inline">Home</span>
+            </Link>
+          )}
+
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
+          <Link to={isClientPortal ? "/client/dashboard" : "/"} className="flex items-center space-x-3 group">
             <motion.div
               className="flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-primary to-accent shadow-lg"
               whileHover={{ scale: 1.05, rotate: 5 }}
@@ -49,10 +65,10 @@ const Header = () => {
               <span className="text-white font-bold text-lg md:text-xl">C</span>
             </motion.div>
             <div className="hidden sm:block">
-              <h1 className="text-xl md:text-2xl font-display font-bold gradient-text">
+              <h1 className="text-lg md:text-xl font-display font-bold gradient-text leading-tight">
                 Colonial First State
               </h1>
-              <p className="text-xs text-gray-600">Member Portal</p>
+              <p className="text-xs text-gray-600 leading-tight">Member Portal</p>
             </div>
           </Link>
 
@@ -71,20 +87,43 @@ const Header = () => {
           </div>
 
           {/* User Profile */}
-          <div className="hidden md:flex items-center space-x-4">
-            <div className="text-right">
-              <p className="text-sm font-semibold text-gray-900">
-                {user.firstName} {user.lastName}
-              </p>
-              <p className="text-xs text-gray-600">{user.occupation}</p>
-            </div>
+          <div className="hidden md:flex items-center relative">
             <motion.div
               className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-semibold shadow-lg cursor-pointer"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
+              onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
             >
               <User className="w-5 h-5" />
             </motion.div>
+            
+            {/* User Dropdown */}
+            <AnimatePresence>
+              {isUserMenuOpen && (
+                <motion.div
+                  className="absolute top-full right-0 mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-200 py-3 px-4"
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold">
+                      {user.firstName[0]}{user.lastName[0]}
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900">
+                        {user.firstName} {user.lastName}
+                      </p>
+                      <p className="text-xs text-gray-600">{user.occupation}</p>
+                    </div>
+                  </div>
+                  <div className="border-t border-gray-200 mt-2 pt-2">
+                    <p className="text-xs text-gray-500">Member ID: #{user.id}</p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Mobile Menu Button */}
@@ -113,6 +152,23 @@ const Header = () => {
             transition={{ duration: 0.3 }}
           >
             <div className="container mx-auto px-4 py-4 space-y-2">
+              {/* Home button in mobile menu */}
+              {isClientPortal && (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                >
+                  <Link
+                    to="/"
+                    className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:text-brand hover:bg-brand/5 transition-all duration-200 font-medium"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                    <span>Back to Portal Selection</span>
+                  </Link>
+                </motion.div>
+              )}
+              
               {navItems.map((item, index) => (
                 <motion.div
                   key={item.path}

@@ -23,7 +23,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             <motion.label
               className={`absolute left-3 pointer-events-none transition-all duration-200 ${
                 isFocused || hasValue
-                  ? '-top-2.5 text-xs bg-white px-2 text-primary font-medium'
+                  ? '-top-2.5 text-xs bg-white px-2 text-brand font-medium'
                   : 'top-3 text-base text-gray-500'
               }`}
               initial={false}
@@ -56,7 +56,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               ${
                 error
                   ? 'border-red-500 focus:border-red-600 focus:ring-2 focus:ring-red-200'
-                  : 'border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20'
+                  : 'border-gray-300 focus:border-brand focus:ring-2 focus:ring-brand-accent/20'
               }
               disabled:bg-gray-50 disabled:cursor-not-allowed
               ${className}

@@ -20,12 +20,12 @@ const Badge = ({
   
   const variants = {
     default: 'bg-gray-100 text-gray-800 border border-gray-300',
-    primary: 'bg-primary/10 text-primary border border-primary/20',
-    secondary: 'bg-accent/10 text-accent border border-accent/20',
-    success: 'bg-green-100 text-green-800 border border-green-300',
+    primary: 'bg-brand/10 text-brand border border-brand/20',
+    secondary: 'bg-brand-soft text-brand border border-brand-accent/20',
+    success: 'bg-green-500 text-green-800 border border-green-300',
     warning: 'bg-yellow-100 text-yellow-800 border border-yellow-300',
     danger: 'bg-red-100 text-red-800 border border-red-300',
-    info: 'bg-blue-100 text-blue-800 border border-blue-300',
+    info: 'bg-brand-soft/50 text-brand border border-brand-accent/30',
   };
 
   const sizes = {

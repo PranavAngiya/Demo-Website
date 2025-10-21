@@ -16,15 +16,15 @@ const Card = ({
   className = '',
   onClick,
 }: CardProps) => {
-  const baseStyles = 'rounded-2xl transition-all duration-300';
+  const baseStyles = 'rounded-3xl transition-all duration-300';
   
   const variants = {
-    solid: 'bg-white border border-gray-100 shadow-card',
-    glass: 'bg-white/70 backdrop-blur-lg border border-white/30 shadow-glass',
-    gradient: 'bg-gradient-to-br from-white to-gray-50 border border-gray-200 shadow-card',
+    solid: 'bg-white border border-gray-100 shadow-soft',
+    glass: 'bg-white/70 backdrop-blur-lg border border-white/30 shadow-soft',
+    gradient: 'bg-gradient-to-br from-white to-blue-50/30 border border-gray-200 shadow-soft',
   };
 
-  const hoverStyles = hover ? 'hover:shadow-card-hover cursor-pointer' : '';
+  const hoverStyles = hover ? 'hover:shadow-lg hover:-translate-y-1 cursor-pointer' : '';
 
   return (
     <motion.div
