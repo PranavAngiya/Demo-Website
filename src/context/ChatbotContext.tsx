@@ -4,6 +4,7 @@ import { sendChatMessage } from '../utils/openai';
 import type { UserContext } from '../utils/openai';
 import { findBestFAQMatch } from '../utils/faqMatcher';
 import { useUser } from './UserContext';
+import faqData from '../data/faqData.json';
 
 export interface ChatMessage {
   id: string;
@@ -27,34 +28,12 @@ interface ChatbotContextType {
 
 const ChatbotContext = createContext<ChatbotContextType | undefined>(undefined);
 
-// Sample FAQ data (in a real app, this would come from FAQ.json or API)
-const FAQ_DATA = [
-  {
-    question: "What is superannuation?",
-    answer: "Superannuation (or 'super') is a long-term savings plan designed to help you save for retirement. Your employer contributes a percentage of your salary into your super account, and you can make additional voluntary contributions. Super is taxed at a concessional rate of 15%, making it one of the most tax-effective ways to save for retirement.",
-    category: "Superannuation Basics"
-  },
-  {
-    question: "How do I check my super balance?",
-    answer: "You can check your super balance by logging into your CFS account online or through our mobile app. Navigate to the Dashboard to see your current balance, recent transactions, and investment performance. You can also request a statement by contacting our support team.",
-    category: "Account Management"
-  },
-  {
-    question: "Can I make extra contributions to my super?",
-    answer: "Yes! You can make voluntary contributions to boost your retirement savings. There are two types: concessional (before-tax) and non-concessional (after-tax) contributions. For 2024-25, you can contribute up to $30,000 in concessional contributions and $120,000 in non-concessional contributions annually. Additional contributions may also provide tax benefits.",
-    category: "Contributions"
-  },
-  {
-    question: "How do I change my investment options?",
-    answer: "To change your investment options, log into your account and navigate to the 'Investment Options' section. You can switch between different investment strategies (Conservative, Balanced, Growth, etc.) based on your risk tolerance and retirement timeline. Changes typically take 3-5 business days to process.",
-    category: "Investments"
-  },
-  {
-    question: "When can I access my super?",
-    answer: "You can generally access your super when you reach your preservation age (between 55-60 depending on your birth year) and retire. Early access is only available in limited circumstances such as severe financial hardship, compassionate grounds, terminal illness, or permanent incapacity. Contact us for specific eligibility requirements.",
-    category: "Retirement"
-  }
-];
+// Load real FAQ data from faqData.json
+const FAQ_DATA = faqData.faqs.map((faq: any) => ({
+  question: faq.question,
+  answer: faq.answer,
+  category: faq.category
+}));
 
 export const ChatbotProvider = ({ children }: { children: ReactNode }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([
