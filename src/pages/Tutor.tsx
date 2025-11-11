@@ -47,7 +47,7 @@ const Tutor = () => {
     }
     
     // Navigate to lesson detail page
-    navigate(`/tutor/lesson/${lesson.id}`);
+    navigate(`/client/learning/lesson/${lesson.id}`);
   };
 
   const { completedLessons, totalLessons, overallProgress } = tutorData.userProgress;
@@ -184,7 +184,7 @@ const Tutor = () => {
               transition={{ delay: 0.6, duration: 0.5 }}
             >
               <Button
-                variant="secondary"
+                variant="ghost"
                 size="lg"
                 icon={<PlayCircle className="w-6 h-6" />}
                 onClick={() => handleLessonClick(tutorData.lessons.find(l => l.id === tutorData.userProgress.currentLesson))}

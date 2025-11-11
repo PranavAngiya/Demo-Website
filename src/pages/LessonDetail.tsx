@@ -138,7 +138,7 @@ const LessonDetail = () => {
   useEffect(() => {
     if (!lesson || !content) {
       showToast('Lesson not found', 'error');
-      navigate('/tutor');
+      navigate('/client/learning');
     }
   }, [lesson, content, navigate, showToast]);
 
@@ -221,12 +221,12 @@ const LessonDetail = () => {
     if (nextLesson && nextLesson.isUnlocked && nextLessonHasContent) {
       console.log('Navigating to next lesson:', nextLesson.id);
       setTimeout(() => {
-        navigate(`/tutor/lesson/${nextLesson.id}`, { replace: true });
+        navigate(`/client/learning/lesson/${nextLesson.id}`, { replace: true });
       }, 1500);
     } else {
       console.log('Going back to tutor home');
       setTimeout(() => {
-        navigate('/tutor', { replace: true });
+        navigate('/client/learning', { replace: true });
       }, 1500);
     }
   };
@@ -472,7 +472,7 @@ const LessonDetail = () => {
             variant="ghost"
             size="sm"
             icon={<ArrowLeft className="w-4 h-4" />}
-            onClick={() => navigate('/tutor')}
+            onClick={() => navigate('/client/learning')}
             className="mb-4"
           >
             Back to Lessons

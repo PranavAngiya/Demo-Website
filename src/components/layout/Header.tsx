@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Home, HelpCircle, GraduationCap, User, Trophy, ArrowLeft, Headphones } from 'lucide-react';
+import { Menu, X, Home, HelpCircle, GraduationCap, User, Trophy, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
 
@@ -26,8 +26,7 @@ const Header = () => {
   const navItems = [
     { name: 'Dashboard', path: '/client/dashboard', icon: Home },
     { name: 'FAQ', path: '/client/faq', icon: HelpCircle },
-    { name: 'Training Hub', path: '/client/training-hub', icon: GraduationCap },
-    { name: 'Customer Care', path: '/client/customer-care', icon: Headphones },
+    { name: 'Learning', path: '/client/learning', icon: GraduationCap },
     { name: 'Progress', path: '/client/progress', icon: Trophy },
   ];
 
@@ -65,10 +64,10 @@ const Header = () => {
               <span className="text-white font-bold text-lg md:text-xl">C</span>
             </motion.div>
             <div className="hidden sm:block">
-              <h1 className="text-lg md:text-xl font-display font-bold gradient-text leading-tight">
+              <h1 className="text-lg md:text-xl font-display font-bold gradient-text leading-none">
                 Colonial First State
               </h1>
-              <p className="text-xs text-gray-600 leading-tight">Member Portal</p>
+              <p className="text-xs text-gray-600 leading-none mt-0.5">Member Portal</p>
             </div>
           </Link>
 

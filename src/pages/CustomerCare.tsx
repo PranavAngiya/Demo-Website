@@ -104,7 +104,7 @@ const CustomerCare = () => {
   if (!data) return null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 pt-24 pb-10 px-4">
       <div className="container mx-auto space-y-10">
         {/* Header Banner */}
         <header className="relative overflow-hidden rounded-3xl border border-gray-200 bg-white/90 p-8 shadow-soft">

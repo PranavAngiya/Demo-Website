@@ -4,6 +4,7 @@ import { UserProvider } from './context/UserContext';
 import { ToastProvider } from './context/ToastContext';
 import { ChatbotProvider } from './context/ChatbotContext';
 import ClientLayout from './components/layout/ClientLayout';
+import AdvisorLayout from './components/layout/AdvisorLayout';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import Spinner from './components/ui/Spinner';
 import FloatingChatButton from './components/chatbot/FloatingChatButton';
@@ -12,6 +13,7 @@ import ChatPanel from './components/chatbot/ChatPanel';
 // Lazy load pages for better performance
 const Homepage = lazy(() => import('./pages/Homepage'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
+const AdvisorDashboard = lazy(() => import('./pages/AdvisorDashboard'));
 const FAQ = lazy(() => import('./pages/FAQ'));
 const TrainingHub = lazy(() => import('./pages/TrainingHub'));
 const CustomerCare = lazy(() => import('./pages/CustomerCare'));
@@ -19,7 +21,6 @@ const Tutor = lazy(() => import('./pages/Tutor'));
 const LessonDetail = lazy(() => import('./pages/LessonDetail'));
 const Progress = lazy(() => import('./pages/Progress'));
 const Components = lazy(() => import('./pages/Components'));
-const AdvisorRedirect = lazy(() => import('./pages/AdvisorRedirect'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Loading fallback component
@@ -46,16 +47,19 @@ function App() {
                   <Route index element={<Navigate to="/client/dashboard" replace />} />
                   <Route path="dashboard" element={<Dashboard />} />
                   <Route path="faq" element={<FAQ />} />
-                  <Route path="training-hub" element={<TrainingHub />} />
-                  <Route path="customer-care" element={<CustomerCare />} />
-                  <Route path="tutor" element={<Tutor />} />
-                  <Route path="tutor/lesson/:lessonId" element={<LessonDetail />} />
+                  <Route path="learning" element={<Tutor />} />
+                  <Route path="learning/lesson/:lessonId" element={<LessonDetail />} />
                   <Route path="progress" element={<Progress />} />
                   <Route path="components" element={<Components />} />
                 </Route>
                 
-                {/* Advisor Portal Redirect */}
-                <Route path="/advisor" element={<AdvisorRedirect />} />
+                {/* Advisor Portal Routes */}
+                <Route path="/advisor" element={<AdvisorLayout />}>
+                  <Route index element={<Navigate to="/advisor/dashboard" replace />} />
+                  <Route path="dashboard" element={<AdvisorDashboard />} />
+                  <Route path="training-hub" element={<TrainingHub />} />
+                  <Route path="customer-care" element={<CustomerCare />} />
+                </Route>
                 
                 {/* 404 catch-all route */}
                 <Route path="*" element={<NotFound />} />
