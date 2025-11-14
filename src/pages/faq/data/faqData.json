@@ -1,0 +1,1575 @@
+{
+  "categories": [
+    {
+      "id": "account",
+      "name": "Your Account",
+      "icon": "User",
+      "color": "blue"
+    },
+    {
+      "id": "super",
+      "name": "Superannuation",
+      "icon": "PiggyBank",
+      "color": "green"
+    },
+    {
+      "id": "insurance",
+      "name": "Insurance",
+      "icon": "Shield",
+      "color": "purple"
+    },
+    {
+      "id": "retirement",
+      "name": "Retirement Planning",
+      "icon": "Home",
+      "color": "orange"
+    },
+    {
+      "id": "investments",
+      "name": "Investments",
+      "icon": "TrendingUp",
+      "color": "red"
+    },
+    {
+      "id": "advice",
+      "name": "Financial Advice",
+      "icon": "Lightbulb",
+      "color": "yellow"
+    },
+    {
+      "id": "employer",
+      "name": "Employer Services",
+      "icon": "Briefcase",
+      "color": "indigo"
+    },
+    {
+      "id": "esignatures",
+      "name": "Digital Signatures",
+      "icon": "FileText",
+      "color": "pink"
+    },
+    {
+      "id": "regulatory",
+      "name": "Regulatory",
+      "icon": "BookOpen",
+      "color": "gray"
+    }
+  ],
+  "faqs": [
+    {
+      "id": "faq-001",
+      "category": "account",
+      "question": "Can I self-service my accounts with CFS?",
+      "answer": "Yes. You can manage your super or investments online in the FirstNet portal or in the CFS mobile app, including checking balances and performing key account tasks.",
+      "tags": [
+        "super",
+        "account",
+        "firstnet",
+        "app",
+        "form"
+      ],
+      "views": 2696,
+      "helpful": 2407,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-002",
+      "category": "account",
+      "question": "What can I do with the CFS mobile app?",
+      "answer": "Check account balance and full transaction history, see how your money is invested, check nominated beneficiaries, review insurance and cover, view and update personal details, find your last statement, and track which employer paid Super Guarantee into your account.",
+      "tags": [
+        "super",
+        "account",
+        "insurance",
+        "cover",
+        "app"
+      ],
+      "views": 3191,
+      "helpful": 2870,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-003",
+      "category": "account",
+      "question": "What is FirstNet?",
+      "answer": "FirstNet is CFS’s secure online member portal, accessible via web browser or the mobile app. Once registered, you log in with your Member ID (OIN) and password to view dashboards, balances and transactions, and manage account features.",
+      "tags": [
+        "account",
+        "firstnet",
+        "app",
+        "access"
+      ],
+      "views": 3149,
+      "helpful": 2936,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-004",
+      "category": "account",
+      "question": "How do you calculate my account balance?",
+      "answer": "Balance is calculated as total units multiplied by the daily unit price: My total units × daily unit price = total value of investment.",
+      "tags": [
+        "account"
+      ],
+      "views": 2838,
+      "helpful": 2548,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-005",
+      "category": "account",
+      "question": "Where can I find my account number?",
+      "answer": "Log in to FirstNet to view it on your dashboard, or find it in the top right of your most recent statement sent to your email or postal address based on your preferences.",
+      "tags": [
+        "account",
+        "firstnet",
+        "statement"
+      ],
+      "views": 2934,
+      "helpful": 2788,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-006",
+      "category": "account",
+      "question": "How do I change my communications preferences?",
+      "answer": "Log in to FirstNet, go to ‘My account’, then select ‘communication preferences’ on the left menu to update how you receive communications.",
+      "tags": [
+        "account",
+        "firstnet"
+      ],
+      "views": 2427,
+      "helpful": 2163,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-007",
+      "category": "account",
+      "question": "How do I submit a digital signature for forms?",
+      "answer": "Most forms can be submitted online without printing. Some still require printing and signing with a pen then uploading. For forms needing ID, follow the proof-of-identity instructions before uploading via FirstNet e-Post.",
+      "tags": [
+        "firstnet",
+        "form"
+      ],
+      "views": 2980,
+      "helpful": 2786,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-008",
+      "category": "account",
+      "question": "How do I upload signed forms to CFS?",
+      "answer": "Log in to FirstNet, navigate to My Account → e-Post a request or upload a scanned form, and follow on-screen upload guidelines.",
+      "tags": [
+        "account",
+        "firstnet",
+        "form"
+      ],
+      "views": 2580,
+      "helpful": 2310,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-009",
+      "category": "account",
+      "question": "How do I submit my photo ID to CFS?",
+      "answer": "Submit via FirstNet e-Post following file size guidelines, or email [contactus@cfs.com.au](mailto:contactus@cfs.com.au) from your registered email address. CFS will contact you if anything is incomplete.",
+      "tags": [
+        "firstnet"
+      ],
+      "views": 2665,
+      "helpful": 2502,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-010",
+      "category": "account",
+      "question": "What occupation/industry should I select on the application?",
+      "answer": "Choose the occupation or industry that best describes your current situation from CFS’s occupation list. If retired, select ‘retired’. If unemployed, choose the industry you most recently worked in.",
+      "tags": [
+        "app"
+      ],
+      "views": 3198,
+      "helpful": 2996,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-011",
+      "category": "account",
+      "question": "What can I do in FirstNet after registering?",
+      "answer": "View balances and transactions for super and other accounts, see portfolio totals if you have multiple accounts, and access account management features from your dashboard.",
+      "tags": [
+        "super",
+        "account",
+        "firstnet",
+        "access",
+        "portfolio"
+      ],
+      "views": 2399,
+      "helpful": 2259,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-012",
+      "category": "account",
+      "question": "How do I get all my CFS account information on the go?",
+      "answer": "Use the CFS app to check balances, review insurance and personal details, and get tips for account management.",
+      "tags": [
+        "account",
+        "insurance",
+        "app",
+        "form"
+      ],
+      "views": 2361,
+      "helpful": 2244,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-013",
+      "category": "super",
+      "question": "When can I typically access my super?",
+      "answer": "Generally at preservation age and permanent retirement, upon ceasing a paid arrangement after age 60, or at age 65 regardless of work status, subject to superannuation rules.",
+      "tags": [
+        "super",
+        "retirement",
+        "access",
+        "preservation age"
+      ],
+      "views": 4324,
+      "helpful": 3852,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-014",
+      "category": "super",
+      "question": "Can I make super contributions if I’m retired?",
+      "answer": "Yes. If you’re under 75, you can contribute regardless of whether you’re still working, subject to contribution rules and caps.",
+      "tags": [
+        "super",
+        "contribution"
+      ],
+      "views": 4491,
+      "helpful": 4173,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-015",
+      "category": "super",
+      "question": "Are there caps on the amount I can contribute to super?",
+      "answer": "Yes. Contribution caps apply and vary by type. From 1 July 2024, non-concessional contributions are capped at $120,000 annually; concessional contributions are capped at $30,000. Exceeding caps can attract additional tax.",
+      "tags": [
+        "super",
+        "contribution",
+        "tax",
+        "app"
+      ],
+      "views": 4086,
+      "helpful": 3763,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-016",
+      "category": "super",
+      "question": "How much must my employer pay into my super?",
+      "answer": "By law, employers must pay the Superannuation Guarantee, 11 percent of ordinary time earnings for 2023–24, scheduled to rise by 0.5 percent yearly to 12 percent in July 2025.",
+      "tags": [
+        "super",
+        "employer"
+      ],
+      "views": 4576,
+      "helpful": 4270,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-017",
+      "category": "super",
+      "question": "How do I find my other super accounts held elsewhere?",
+      "answer": "Log in to FirstNet, go to ‘My account’, launch the ‘SuperMatch’ tool, request and enter your FirstNet SMS code, then view the list of your identified super accounts and balances.",
+      "tags": [
+        "super",
+        "account",
+        "firstnet"
+      ],
+      "views": 4062,
+      "helpful": 3657,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-018",
+      "category": "super",
+      "question": "What happens to my super if I pass away?",
+      "answer": "Super is not treated like regular estate assets. Make a written death benefit nomination so your super can be paid to your chosen beneficiaries; otherwise it’s paid to your Legal Personal Representative or estate.",
+      "tags": [
+        "super",
+        "app"
+      ],
+      "views": 4175,
+      "helpful": 3846,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-019",
+      "category": "super",
+      "question": "What happens to my super if I’m leaving Australia?",
+      "answer": "If you’re a permanent resident departing, your super remains subject to the same rules as residents in Australia and is generally accessible only at preservation age and retirement, or age 65, unless an early release condition applies.",
+      "tags": [
+        "super",
+        "retirement",
+        "app",
+        "access",
+        "preservation age"
+      ],
+      "views": 3850,
+      "helpful": 3448,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-020",
+      "category": "super",
+      "question": "How do I access my super on financial hardship grounds?",
+      "answer": "CFS can approve early release in limited circumstances. For example, under Claim Type 1, one lump sum between $1,000 and $10,000 in a 12-month period if you meet strict criteria. Consider taxes, impacts on insurance, and complete the required form.",
+      "tags": [
+        "super",
+        "insurance",
+        "tax",
+        "claim",
+        "app"
+      ],
+      "views": 3671,
+      "helpful": 3430,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-021",
+      "category": "super",
+      "question": "How do I apply for new or additional insurance cover inside super?",
+      "answer": "Decide the type and level of cover suitable for your needs, consider getting financial advice, gather required information, and follow the application steps provided by CFS.",
+      "tags": [
+        "super",
+        "insurance",
+        "cover",
+        "app",
+        "advice"
+      ],
+      "views": 4067,
+      "helpful": 3857,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-022",
+      "category": "super",
+      "question": "How do I reduce or cancel my insurance cover?",
+      "answer": "You can reduce or cancel your cover at any time through the outlined process in CFS, which may involve online changes or submitting the relevant form.",
+      "tags": [
+        "insurance",
+        "cover",
+        "form"
+      ],
+      "views": 4037,
+      "helpful": 3855,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-023",
+      "category": "super",
+      "question": "How do insurance premiums in my super work?",
+      "answer": "Premiums are regular payments for insurance cover. Understanding how they’re calculated and debited helps you manage cover levels and costs within your super.",
+      "tags": [
+        "super",
+        "insurance",
+        "cover"
+      ],
+      "views": 4252,
+      "helpful": 4063,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-024",
+      "category": "super",
+      "question": "How do I start an insurance claim with CFS?",
+      "answer": "Check the documents required to start your claim, submit them as instructed, and note that SCI/IP claims may include access to rehabilitation services through the insurer.",
+      "tags": [
+        "insurance",
+        "claim",
+        "access"
+      ],
+      "views": 3715,
+      "helpful": 3553,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-025",
+      "category": "super",
+      "question": "What documents might be required to start a claim?",
+      "answer": "Documentation varies by claim type; CFS lists the specific documents needed and will advise if more are required as your claim progresses.",
+      "tags": [
+        "claim"
+      ],
+      "views": 3991,
+      "helpful": 3548,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-026",
+      "category": "insurance",
+      "question": "What is CFS’s claims philosophy?",
+      "answer": "To ensure valid claims are paid promptly, with straightforward processes and regular updates, treating members with empathy, respect and care. The insurer’s philosophy aligns to help people when they need it most.",
+      "tags": [
+        "claim"
+      ],
+      "views": 3099,
+      "helpful": 2797,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-027",
+      "category": "retirement",
+      "question": "What types of pensions can provide retirement income?",
+      "answer": "Common options include account-based pensions from your super fund and the government Age Pension from Centrelink if eligible; they can be combined.",
+      "tags": [
+        "super",
+        "account",
+        "retirement",
+        "pension"
+      ],
+      "views": 3417,
+      "helpful": 3141,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-028",
+      "category": "retirement",
+      "question": "What is an account-based (allocated) pension?",
+      "answer": "It’s a regular income stream you draw from your super after reaching preservation age. How long it lasts depends on your balance, investment performance, and withdrawal amount.",
+      "tags": [
+        "super",
+        "account",
+        "pension",
+        "withdraw",
+        "preservation age"
+      ],
+      "views": 3150,
+      "helpful": 2814,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-029",
+      "category": "retirement",
+      "question": "Are account-based pensions tax-effective?",
+      "answer": "Yes. After meeting a condition of release, investment earnings within the account-based pension are tax-free, and pension payments are tax-free from age 60.",
+      "tags": [
+        "account",
+        "pension",
+        "tax"
+      ],
+      "views": 3618,
+      "helpful": 3317,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-030",
+      "category": "retirement",
+      "question": "How can I diversify retirement income?",
+      "answer": "Consider blending super pensions with other investments such as index funds, term deposits, share dividends, and managed fund distributions.",
+      "tags": [
+        "super",
+        "retirement",
+        "pension"
+      ],
+      "views": 3728,
+      "helpful": 3360,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-031",
+      "category": "retirement",
+      "question": "How do I access Centrelink pension/income details through CFS?",
+      "answer": "Log in to FirstNet, select ‘My account’, then use the ‘Manage my account’ options on the left to access Centrelink pension/income details.",
+      "tags": [
+        "account",
+        "pension",
+        "firstnet",
+        "access"
+      ],
+      "views": 3283,
+      "helpful": 3132,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-032",
+      "category": "advice",
+      "question": "What kinds of advisers and advice help are available?",
+      "answer": "Advisers can help with budgeting, debt reduction, insurance, building investments, business growth, retirement preparation, and estate planning, with regular plan reviews to keep you on track.",
+      "tags": [
+        "insurance",
+        "retirement",
+        "advice"
+      ],
+      "views": 1774,
+      "helpful": 1600,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-033",
+      "category": "advice",
+      "question": "What types of advice can I get through CFS?",
+      "answer": "Personal advice involves assessing your circumstances and recommending products or strategies for super, pension or investments. Initial consultations are often free, though personal advice attracts fees.",
+      "tags": [
+        "super",
+        "pension",
+        "fee",
+        "advice"
+      ],
+      "views": 1978,
+      "helpful": 1774,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-034",
+      "category": "advice",
+      "question": "Is financial advice worth the cost?",
+      "answer": "CFS notes research indicating the average cost to set up a financial plan is around $3,300, with ongoing advice averaging $4,300 annually, and outlines reasons advice can be valuable depending on needs.",
+      "tags": [
+        "advice"
+      ],
+      "views": 1868,
+      "helpful": 1759,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-035",
+      "category": "esignatures",
+      "question": "Which electronic signature providers does CFS recognise for adviser-submitted forms?",
+      "answer": "Recognised providers include Adobe Sign, Annature, Box Sign, CWT, DocuSign, FuseSign, GetAccept, Dropbox Sign, IRESS/XPlan, JustSign, Nitro Sign, OneSpan, PandaDoc, PleaseSign, SignNow, and Workiro.",
+      "tags": [
+        "form"
+      ],
+      "views": 500,
+      "helpful": 417,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-036",
+      "category": "esignatures",
+      "question": "Does CFS accept ‘sign on glass’?",
+      "answer": "Yes. Clients can consent using their personal electronic device without printing or scanning.",
+      "tags": [],
+      "views": 941,
+      "helpful": 862,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-037",
+      "category": "esignatures",
+      "question": "Do approved e-signature forms require two-factor authentication?",
+      "answer": "Approved forms are now accepted with single-factor authentication by default, though two-factor remains available if preferred.",
+      "tags": [
+        "app",
+        "form"
+      ],
+      "views": 500,
+      "helpful": 329,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-038",
+      "category": "esignatures",
+      "question": "I don’t have DocuSign or Adobe Sign. Is there another way to use digital signatures with clients?",
+      "answer": "For FirstChoice, advisers can use the Digital Communications Tool (DCT) with built-in 2FA at no cost to the adviser. Multiple forms in one envelope is not supported.",
+      "tags": [
+        "form"
+      ],
+      "views": 600,
+      "helpful": 540,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-039",
+      "category": "esignatures",
+      "question": "How do I complete an Adobe Sign request from my adviser?",
+      "answer": "You’ll receive an email link, verify identity with a one-time code to your registered mobile (text or voice), review the documents, sign digitally, and receive confirmation.",
+      "tags": [],
+      "views": 780,
+      "helpful": 744,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-040",
+      "category": "employer",
+      "question": "What is the FirstChoice Employer Super Clearing House?",
+      "answer": "A SuperStream-compliant, fast and secure clearing service (provided by SuperChoice) that lets employers make a single payment covering all employees regardless of their chosen super funds, with tracking and payment features.",
+      "tags": [
+        "super",
+        "cover",
+        "employer"
+      ],
+      "views": 1452,
+      "helpful": 1318,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-041",
+      "category": "employer",
+      "question": "How do I pay super contributions using the clearing house?",
+      "answer": "Register for the employer portal, then submit contributions via single payment and the clearing house will forward amounts to employees’ chosen funds.",
+      "tags": [
+        "super",
+        "contribution",
+        "employer"
+      ],
+      "views": 1022,
+      "helpful": 950,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-042",
+      "category": "employer",
+      "question": "What contribution submission options exist in the clearing house?",
+      "answer": "You can add contributions manually via a pre-filled form, upload a bulk contribution file, resume a saved submission, or reuse a previous submission.",
+      "tags": [
+        "contribution",
+        "form"
+      ],
+      "views": 783,
+      "helpful": 732,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-043",
+      "category": "employer",
+      "question": "How is employer and employee data protected in the clearing house?",
+      "answer": "CFS and SuperChoice adhere to strict data protection policies. The service is SuperStream-compliant and communications are encrypted with strict protocols.",
+      "tags": [
+        "super",
+        "employer"
+      ],
+      "views": 835,
+      "helpful": 753,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-044",
+      "category": "employer",
+      "question": "Who is SuperChoice?",
+      "answer": "SuperChoice is a leading provider of superannuation clearing services. CFS has appointed SuperChoice to deliver the clearing house service for employer products.",
+      "tags": [
+        "super",
+        "app",
+        "employer"
+      ],
+      "views": 1072,
+      "helpful": 965,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-045",
+      "category": "employer",
+      "question": "What does the ‘creating and maintaining employees’ guide cover?",
+      "answer": "It covers adding new employees, maintaining records, and processing exits within the FirstChoice Employer Super Clearing House.",
+      "tags": [
+        "super",
+        "cover",
+        "employer"
+      ],
+      "views": 1110,
+      "helpful": 995,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-046",
+      "category": "employer",
+      "question": "Can I track contribution history after transition to the new clearing house?",
+      "answer": "Yes. Documentation explains where to view or download contribution history and how to find it within the portal.",
+      "tags": [
+        "contribution"
+      ],
+      "views": 748,
+      "helpful": 684,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-047",
+      "category": "super",
+      "question": "How do I take my existing super account to a new job?",
+      "answer": "Use CFS resources to understand super basics, find other super accounts, and consider consolidating. Provide your employer with your chosen fund details to direct contributions to your existing account.",
+      "tags": [
+        "super",
+        "account",
+        "contribution",
+        "employer"
+      ],
+      "views": 3264,
+      "helpful": 3050,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-048",
+      "category": "investments",
+      "question": "What is an investment holding or portfolio holding?",
+      "answer": "They are the individual assets you’re invested in through your chosen options, such as shares, bonds or funds. Your overall portfolio consists of many holdings across options you select.",
+      "tags": [
+        "portfolio"
+      ],
+      "views": 2077,
+      "helpful": 1987,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-049",
+      "category": "account",
+      "question": "How do I nominate or add an adviser to my account?",
+      "answer": "CFS provides a process and forms that allow you to nominate an adviser or authorised representative to transact on your behalf, with guidance on acceptable document formats and upload tips.",
+      "tags": [
+        "account",
+        "form"
+      ],
+      "views": 1650,
+      "helpful": 1491,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-050",
+      "category": "account",
+      "question": "Which file formats are accepted for uploading documents?",
+      "answer": "Accepted formats include PDF, JPG/JPEG, PNG and BMP. Ensure documents are legible and consider scanning in black and white or lower DPI to reduce file size.",
+      "tags": [
+        "form"
+      ],
+      "views": 2360,
+      "helpful": 2245,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-051",
+      "category": "super",
+      "question": "How do I check if I’m eligible for financial hardship early release?",
+      "answer": "Eligibility is limited to specific circumstances with defined conditions and payment ranges. You should first speak with CFS, then review criteria and tax implications before completing the form.",
+      "tags": [
+        "tax",
+        "form"
+      ],
+      "views": 3371,
+      "helpful": 3140,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-052",
+      "category": "account",
+      "question": "What information can I view in the app related to employer contributions?",
+      "answer": "You can view and track which employer has paid Super Guarantee contributions into your account.",
+      "tags": [
+        "super",
+        "account",
+        "contribution",
+        "app",
+        "employer"
+      ],
+      "views": 1749,
+      "helpful": 1550,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-053",
+      "category": "retirement",
+      "question": "What CFS tools help me plan retirement?",
+      "answer": "CFS provides a retirement calculator, super comparison tool, pages on entering retirement, account-based pensions, transition to retirement, and an Age Pension guide.",
+      "tags": [
+        "super",
+        "account",
+        "retirement",
+        "pension"
+      ],
+      "views": 2785,
+      "helpful": 2554,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-054",
+      "category": "regulatory",
+      "question": "What are the ‘Your Future, Your Super’ reforms and does CFS support them?",
+      "answer": "YFYS reforms include performance tests and comparison tools to improve outcomes. CFS states it supports the final regulations and related changes to performance test methodology.",
+      "tags": [
+        "super",
+        "form"
+      ],
+      "views": 556,
+      "helpful": 500,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-055",
+      "category": "account",
+      "question": "How do I access FirstNet if I forgot my Member ID (OIN) or password?",
+      "answer": "Use the online retrieval options provided on the login page to recover your OIN or reset your password, then log in to FirstNet.",
+      "tags": [
+        "cover",
+        "firstnet",
+        "access"
+      ],
+      "views": 1898,
+      "helpful": 1808,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-056",
+      "category": "account",
+      "question": "How do I view my complete transaction history?",
+      "answer": "Use the CFS app or FirstNet to view full transaction history for your super account as part of the app’s account features.",
+      "tags": [
+        "super",
+        "account",
+        "firstnet",
+        "app"
+      ],
+      "views": 1456,
+      "helpful": 1387,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-057",
+      "category": "account",
+      "question": "Can I update personal details online?",
+      "answer": "Yes. In the app or FirstNet you can view and update personal details such as address and contact information.",
+      "tags": [
+        "firstnet",
+        "app",
+        "form"
+      ],
+      "views": 1598,
+      "helpful": 1501,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-058",
+      "category": "account",
+      "question": "Can I review and manage my insurance inside the portal/app?",
+      "answer": "Yes. You can review your insurance and cover level, and follow the relevant processes to adjust it.",
+      "tags": [
+        "insurance",
+        "cover",
+        "app"
+      ],
+      "views": 1977,
+      "helpful": 1849,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-059",
+      "category": "account",
+      "question": "How do I check my nominated beneficiaries?",
+      "answer": "In the CFS app, you can view nominated beneficiaries. For changes, follow the CFS process for updating beneficiary nominations.",
+      "tags": [
+        "beneficiary",
+        "app"
+      ],
+      "views": 1685,
+      "helpful": 1586,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-060",
+      "category": "account",
+      "question": "How do I see how my money is invested?",
+      "answer": "The app and FirstNet show how your money is invested across selected options and holdings.",
+      "tags": [
+        "firstnet",
+        "app"
+      ],
+      "views": 1919,
+      "helpful": 1794,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-061",
+      "category": "account",
+      "question": "Can I get help by phone or email if I have account queries?",
+      "answer": "Yes. CFS provides contact details and helpful topics on its Contact Us page, with call centre hours listed.",
+      "tags": [
+        "account"
+      ],
+      "views": 1425,
+      "helpful": 1281,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-062",
+      "category": "employer",
+      "question": "Is there any cost to use the CFS clearing house?",
+      "answer": "CFS states you can use the clearing house available through the portal to process contributions for free, sending one payment that CFS distributes to funds.",
+      "tags": [
+        "contribution"
+      ],
+      "views": 1001,
+      "helpful": 942,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-063",
+      "category": "employer",
+      "question": "Can I pay all employees with one payment even if they are in different funds?",
+      "answer": "Yes. The clearing house allows a single consolidated payment to be allocated to employees’ various super funds.",
+      "tags": [
+        "super"
+      ],
+      "views": 576,
+      "helpful": 548,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-064",
+      "category": "employer",
+      "question": "What if I need training or support during clearing house transition?",
+      "answer": "CFS provides guides and FAQs for employers on transition steps, user roles, submissions, and where to find contribution history and documents.",
+      "tags": [
+        "contribution",
+        "employer"
+      ],
+      "views": 871,
+      "helpful": 770,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-065",
+      "category": "employer",
+      "question": "What are the common contribution workflows in the portal?",
+      "answer": "Options include Add Contribution with pre-filled employee details, uploading bulk files, resuming partial submissions, or reusing prior ones.",
+      "tags": [
+        "contribution"
+      ],
+      "views": 500,
+      "helpful": 168,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-066",
+      "category": "super",
+      "question": "If I have multiple CFS accounts, how can I manage or consolidate them?",
+      "answer": "CFS provides guidance and tools for combining accounts and checking implications for insurance, fees, and processing time before consolidating.",
+      "tags": [
+        "account",
+        "insurance",
+        "fee"
+      ],
+      "views": 3683,
+      "helpful": 3333,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-067",
+      "category": "account",
+      "question": "How do I change communications to digital or paper?",
+      "answer": "In FirstNet, go to ‘My account’ → ‘communication preferences’ to choose email or post for statements and notices.",
+      "tags": [
+        "account",
+        "firstnet",
+        "statement"
+      ],
+      "views": 1311,
+      "helpful": 1248,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-068",
+      "category": "super",
+      "question": "What are the steps to make an insurance claim through CFS?",
+      "answer": "Identify claim type, gather required documents, submit forms via the stated channels, and liaise with CFS and the insurer through assessment, noting available rehab services for SCI/IP.",
+      "tags": [
+        "insurance",
+        "claim",
+        "form"
+      ],
+      "views": 3122,
+      "helpful": 2793,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-069",
+      "category": "super",
+      "question": "Does CFS outline tax and insurance impacts for early access on hardship?",
+      "answer": "Yes. CFS asks you to consider potential tax withholding and the impact on any insurance cover before applying for early release.",
+      "tags": [
+        "insurance",
+        "tax",
+        "cover",
+        "app",
+        "access"
+      ],
+      "views": 3315,
+      "helpful": 2932,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-070",
+      "category": "super",
+      "question": "How do I check employer Super Guarantee payments in my account?",
+      "answer": "Use the CFS app to view and track which employer has paid SG contributions and when they were received.",
+      "tags": [
+        "super",
+        "account",
+        "contribution",
+        "app",
+        "employer"
+      ],
+      "views": 2897,
+      "helpful": 2625,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-071",
+      "category": "account",
+      "question": "Can I retrieve my FirstNet login details online?",
+      "answer": "Yes. Use the Login page to retrieve your Member ID (OIN) and reset your password if forgotten.",
+      "tags": [
+        "firstnet"
+      ],
+      "views": 1273,
+      "helpful": 1142,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-072",
+      "category": "account",
+      "question": "What upload tips does CFS provide for documents?",
+      "answer": "Scan in black and white or lower DPI to reduce file size and ensure legibility; accepted formats include PDF, JPG/JPEG, PNG, and BMP.",
+      "tags": [
+        "form"
+      ],
+      "views": 1761,
+      "helpful": 1586,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-073",
+      "category": "advice",
+      "question": "What questions should I ask a financial adviser before engaging them?",
+      "answer": "Ask about qualifications, services offered, how plans are implemented, timelines, investment approach, communication style, who manages investments, and fee structures.",
+      "tags": [
+        "fee",
+        "app"
+      ],
+      "views": 1251,
+      "helpful": 1140,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-074",
+      "category": "retirement",
+      "question": "What CFS pages help me set up an income stream in retirement?",
+      "answer": "CFS provides guides for setting up an income stream, including account-based pensions, transition to retirement, and Age Pension information.",
+      "tags": [
+        "account",
+        "retirement",
+        "pension",
+        "form"
+      ],
+      "views": 2736,
+      "helpful": 2583,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-075",
+      "category": "regulatory",
+      "question": "How do performance tests work for MySuper products?",
+      "answer": "APRA sets benchmarks and compares product performance against them annually. Underperformance can trigger member notifications and remedial steps.",
+      "tags": [
+        "super",
+        "form"
+      ],
+      "views": 500,
+      "helpful": 100,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-076",
+      "category": "esignatures",
+      "question": "Are multiple documents in one envelope supported by Adobe Sign for CFS forms?",
+      "answer": "CFS notes that multiple forms in one envelope is not supported for certain digital signature processes outlined to advisers.",
+      "tags": [
+        "form"
+      ],
+      "views": 500,
+      "helpful": 220,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-077",
+      "category": "account",
+      "question": "How do I check my most recent statement quickly?",
+      "answer": "Open the CFS app and use the account features to locate and view your last statement.",
+      "tags": [
+        "account",
+        "app",
+        "statement"
+      ],
+      "views": 1304,
+      "helpful": 1163,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-078",
+      "category": "super",
+      "question": "What should I consider before applying for more insurance cover?",
+      "answer": "Consider your financial needs, the appropriate type and level of cover, potential premium costs, and whether to seek financial advice before applying.",
+      "tags": [
+        "insurance",
+        "cover",
+        "app",
+        "advice"
+      ],
+      "views": 3314,
+      "helpful": 3152,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-079",
+      "category": "employer",
+      "question": "What if validation errors persist after I correct them in the portal?",
+      "answer": "CFS’s clearing house FAQs address common validation issues and how to resolve or clear warnings within the submission workflow.",
+      "tags": [],
+      "views": 500,
+      "helpful": 247,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-080",
+      "category": "employer",
+      "question": "Can the clearing house handle choice members and default fund members?",
+      "answer": "Yes. The clearing house is designed to process contributions for both default and choice fund members in a consolidated flow.",
+      "tags": [
+        "contribution"
+      ],
+      "views": 500,
+      "helpful": 415,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-081",
+      "category": "employer",
+      "question": "How long does it take for funds to receive contributions after submission?",
+      "answer": "Processing timeframes are described in CFS’s clearing house FAQs and guides; contributions are transmitted securely under SuperStream standards.",
+      "tags": [
+        "super",
+        "contribution"
+      ],
+      "views": 500,
+      "helpful": 199,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-082",
+      "category": "retirement",
+      "question": "What is transition to retirement (TTR)?",
+      "answer": "TTR lets you access part of your super as an income stream once you reach preservation age, while you keep working, subject to rules and limits.",
+      "tags": [
+        "super",
+        "retirement",
+        "access",
+        "preservation age"
+      ],
+      "views": 2057,
+      "helpful": 1960,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-083",
+      "category": "retirement",
+      "question": "Where do I find guidance on ‘How much do I need to retire?’",
+      "answer": "Use CFS’s retirement calculator and resources under the retirement planning section to estimate needs based on lifestyle and assumptions.",
+      "tags": [
+        "retirement"
+      ],
+      "views": 2390,
+      "helpful": 2187,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-084",
+      "category": "account",
+      "question": "Can I see my portfolio if I have multiple CFS accounts?",
+      "answer": "Yes. FirstNet displays your entire portfolio and total value if you hold more than one account.",
+      "tags": [
+        "account",
+        "firstnet",
+        "portfolio"
+      ],
+      "views": 1301,
+      "helpful": 1186,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-085",
+      "category": "account",
+      "question": "Do I need to print and sign all CFS forms?",
+      "answer": "No. Most forms can be submitted online. Only certain forms still require printing and pen signatures before uploading.",
+      "tags": [
+        "form"
+      ],
+      "views": 881,
+      "helpful": 828,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-086",
+      "category": "account",
+      "question": "How do I access the original FirstNet site to upload forms for my super account?",
+      "answer": "From the portal’s top-right dropdown, select the original FirstNet site, then go to My Account → e-Post to upload forms.",
+      "tags": [
+        "super",
+        "account",
+        "firstnet",
+        "access",
+        "form"
+      ],
+      "views": 1749,
+      "helpful": 1626,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-087",
+      "category": "retirement",
+      "question": "Can I combine the Age Pension with my super pension?",
+      "answer": "Yes. Many retirees combine an account-based pension from super with the government Age Pension if eligible.",
+      "tags": [
+        "super",
+        "account",
+        "pension"
+      ],
+      "views": 1972,
+      "helpful": 1799,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-088",
+      "category": "investments",
+      "question": "Does CFS explain basic investment concepts for beginners?",
+      "answer": "Yes. CFS provides beginner guides, including what holdings are and how portfolios are composed within chosen investment options.",
+      "tags": [
+        "portfolio"
+      ],
+      "views": 1108,
+      "helpful": 1026,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-089",
+      "category": "advice",
+      "question": "What are typical costs cited for advice in Australia according to CFS’s resources?",
+      "answer": "Indicative averages referenced are around $3,300 to set up a plan and about $4,300 annually for ongoing advice, though fees vary widely.",
+      "tags": [
+        "fee",
+        "advice"
+      ],
+      "views": 678,
+      "helpful": 624,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-090",
+      "category": "account",
+      "question": "Can I update communication preferences without calling support?",
+      "answer": "Yes. Use FirstNet’s communication preferences menu to change settings yourself.",
+      "tags": [
+        "firstnet"
+      ],
+      "views": 1357,
+      "helpful": 1264,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-091",
+      "category": "regulatory",
+      "question": "Why were changes made to the performance test methodology supported by CFS?",
+      "answer": "CFS supports the final regulations which include the most recent financial year’s administration fees, better reflecting actual fees paid over the last 12 months.",
+      "tags": [
+        "fee",
+        "form"
+      ],
+      "views": 500,
+      "helpful": 100,
+      "notHelpful": 400
+    },
+    {
+      "id": "faq-092",
+      "category": "esignatures",
+      "question": "What authentication occurs when clients sign via Adobe Sign?",
+      "answer": "Clients verify their identity through a code sent to their registered mobile number via SMS or voice before signing documents.",
+      "tags": [],
+      "views": 500,
+      "helpful": 100,
+      "notHelpful": 577
+    },
+    {
+      "id": "faq-093",
+      "category": "employer",
+      "question": "Where can I find privacy information for the clearing house service?",
+      "answer": "Privacy information is referenced within the clearing house FAQs and related documentation supplied by CFS and SuperChoice.",
+      "tags": [
+        "super",
+        "form"
+      ],
+      "views": 500,
+      "helpful": 100,
+      "notHelpful": 132
+    },
+    {
+      "id": "faq-094",
+      "category": "account",
+      "question": "Does the CFS app support beneficiary review and insurance checks?",
+      "answer": "Yes. The app includes views for beneficiaries and current insurance cover levels as part of its account features.",
+      "tags": [
+        "account",
+        "insurance",
+        "cover",
+        "beneficiary",
+        "app"
+      ],
+      "views": 1094,
+      "helpful": 983,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-095",
+      "category": "super",
+      "question": "What are after-tax (non-concessional) contributions?",
+      "answer": "They are contributions made from after-tax income, including personal savings or spouse contributions, and are subject to annual caps.",
+      "tags": [
+        "contribution",
+        "tax"
+      ],
+      "views": 2400,
+      "helpful": 2248,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-096",
+      "category": "super",
+      "question": "What should I do before consolidating super accounts?",
+      "answer": "Review insurance and fees, understand processing times and potential impacts, and use CFS tools to locate all accounts before deciding.",
+      "tags": [
+        "super",
+        "account",
+        "insurance",
+        "fee"
+      ],
+      "views": 2983,
+      "helpful": 2685,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-097",
+      "category": "account",
+      "question": "Can I email ID documents if I can’t upload them?",
+      "answer": "Yes. You can email them to [contactus@cfs.com.au](mailto:contactus@cfs.com.au) from your registered email address, following CFS’s instructions.",
+      "tags": [],
+      "views": 910,
+      "helpful": 832,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-098",
+      "category": "account",
+      "question": "What if I have more than one CFS account — how is my portfolio shown?",
+      "answer": "FirstNet shows your entire portfolio across accounts with a total value summary on the dashboard.",
+      "tags": [
+        "account",
+        "firstnet",
+        "portfolio"
+      ],
+      "views": 1177,
+      "helpful": 1098,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-099",
+      "category": "retirement",
+      "question": "Does CFS provide a super comparison tool relevant to retirement planning?",
+      "answer": "Yes. The retirement section links to a super comparison tool to help evaluate options as part of planning.",
+      "tags": [
+        "super",
+        "retirement"
+      ],
+      "views": 2498,
+      "helpful": 2368,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-100",
+      "category": "account",
+      "question": "Can I see unit prices and understand daily valuation impacts?",
+      "answer": "Yes. Account balances reflect total units times daily unit price, which you can monitor through the portal and product pages.",
+      "tags": [
+        "account"
+      ],
+      "views": 1451,
+      "helpful": 1281,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-101",
+      "category": "employer",
+      "question": "Can I add a new employee before uploading contributions?",
+      "answer": "Yes. You can pre-add employees, maintain their records, and process exits using the clearing house employee management features.",
+      "tags": [
+        "contribution"
+      ],
+      "views": 500,
+      "helpful": 100,
+      "notHelpful": 108
+    },
+    {
+      "id": "faq-102",
+      "category": "account",
+      "question": "Can I switch between investment options through CFS digital channels?",
+      "answer": "CFS’s online services and forms enable switching investment options; review product information and forms for the process.",
+      "tags": [
+        "form"
+      ],
+      "views": 625,
+      "helpful": 553,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-103",
+      "category": "account",
+      "question": "Does CFS provide guidance if my uploaded documents are incorrect?",
+      "answer": "Yes. If something is incorrect or incomplete after submission, a CFS team member will contact you to resolve it.",
+      "tags": [],
+      "views": 1366,
+      "helpful": 1205,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-104",
+      "category": "advice",
+      "question": "Will my adviser review my plan regularly?",
+      "answer": "Yes. Advisers generally offer to review plans regularly and adjust as your circumstances and goals change over time.",
+      "tags": [],
+      "views": 500,
+      "helpful": 173,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-105",
+      "category": "retirement",
+      "question": "Are earnings within an account-based pension taxed?",
+      "answer": "No. Once a condition of release is met, investment earnings within the account-based pension are tax-free, and payments are tax-free from age 60.",
+      "tags": [
+        "account",
+        "pension",
+        "tax"
+      ],
+      "views": 1783,
+      "helpful": 1709,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-106",
+      "category": "employer",
+      "question": "Is the clearing house SuperStream compliant?",
+      "answer": "Yes. The service complies with SuperStream legislation and uses encrypted communications.",
+      "tags": [
+        "super"
+      ],
+      "views": 500,
+      "helpful": 100,
+      "notHelpful": 265
+    },
+    {
+      "id": "faq-107",
+      "category": "account",
+      "question": "Can I view my entire portfolio value at a glance?",
+      "answer": "Yes. If you hold multiple accounts, the FirstNet dashboard displays your total portfolio value.",
+      "tags": [
+        "account",
+        "firstnet",
+        "portfolio"
+      ],
+      "views": 1019,
+      "helpful": 942,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-108",
+      "category": "account",
+      "question": "Can I choose how CFS sends me statements and notices?",
+      "answer": "Yes. Update your preferences in FirstNet under communication preferences to choose email or postal delivery.",
+      "tags": [
+        "firstnet",
+        "statement"
+      ],
+      "views": 540,
+      "helpful": 475,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-109",
+      "category": "super",
+      "question": "What steps are recommended before seeking early access to super?",
+      "answer": "Talk to CFS, confirm eligibility, consider tax and insurance impacts, complete the correct form, and explore other support options if applicable.",
+      "tags": [
+        "super",
+        "insurance",
+        "tax",
+        "app",
+        "access"
+      ],
+      "views": 2225,
+      "helpful": 2110,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-110",
+      "category": "account",
+      "question": "Where can I get general help topics or fee consent form links?",
+      "answer": "Visit the Contact Us page’s helpful topics section for links to adviser service fee consent forms and other support resources.",
+      "tags": [
+        "fee",
+        "form"
+      ],
+      "views": 500,
+      "helpful": 407,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-111",
+      "category": "advice",
+      "question": "Does CFS explain the difference between personal financial advice and general information?",
+      "answer": "Yes. CFS outlines that personal advice evaluates your situation to provide tailored recommendations, as distinct from general information.",
+      "tags": [
+        "advice",
+        "form"
+      ],
+      "views": 500,
+      "helpful": 100,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-112",
+      "category": "account",
+      "question": "Can I check my beneficiaries, insurance, and personal details from the app without logging into a desktop?",
+      "answer": "Yes. The app includes beneficiary views, insurance review, and personal detail updates.",
+      "tags": [
+        "insurance",
+        "beneficiary",
+        "app"
+      ],
+      "views": 500,
+      "helpful": 442,
+      "notHelpful": 10
+    },
+    {
+      "id": "faq-113",
+      "category": "super",
+      "question": "How do I verify and combine multiple super accounts I might hold elsewhere?",
+      "answer": "Use FirstNet’s SuperMatch tool to find your other accounts by verifying your identity with a one-time FirstNet code, then consider consolidation.",
+      "tags": [
+        "super",
+        "account",
+        "firstnet"
+      ],
+      "views": 2111,
+      "helpful": 1944,
+      "notHelpful": 10
+    }
+  ]
+}

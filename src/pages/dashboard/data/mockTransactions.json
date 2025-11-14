@@ -1,0 +1,122 @@
+[
+  {
+    "id": "TXN-2024-087",
+    "date": "2024-10-19",
+    "type": "Employer Contribution",
+    "description": "Quarterly superannuation guarantee",
+    "amount": 850.00,
+    "product": "FirstChoice Employer Super",
+    "status": "Completed",
+    "category": "Contribution",
+    "icon": "ArrowDownCircle",
+    "color": "green"
+  },
+  {
+    "id": "TXN-2024-086",
+    "date": "2024-10-19",
+    "type": "Personal Contribution",
+    "description": "Monthly personal contribution",
+    "amount": 200.00,
+    "product": "FirstChoice Employer Super",
+    "status": "Completed",
+    "category": "Contribution",
+    "icon": "PlusCircle",
+    "color": "green"
+  },
+  {
+    "id": "TXN-2024-085",
+    "date": "2024-10-15",
+    "type": "Investment",
+    "description": "Monthly investment - Growth Portfolio",
+    "amount": 500.00,
+    "product": "Growth Investment Portfolio",
+    "status": "Completed",
+    "category": "Investment",
+    "icon": "TrendingUp",
+    "color": "blue"
+  },
+  {
+    "id": "TXN-2024-084",
+    "date": "2024-10-10",
+    "type": "Fee",
+    "description": "Administration fee",
+    "amount": -12.50,
+    "product": "All Accounts",
+    "status": "Completed",
+    "category": "Fee",
+    "icon": "DollarSign",
+    "color": "red"
+  },
+  {
+    "id": "TXN-2024-083",
+    "date": "2024-10-01",
+    "type": "Rebalance",
+    "description": "Portfolio rebalancing",
+    "amount": 0.00,
+    "product": "All Accounts",
+    "status": "Completed",
+    "category": "Management",
+    "icon": "RefreshCw",
+    "color": "purple"
+  },
+  {
+    "id": "TXN-2024-082",
+    "date": "2024-09-28",
+    "type": "Distribution",
+    "description": "Quarterly dividend distribution",
+    "amount": 285.30,
+    "product": "Growth Investment Portfolio",
+    "status": "Completed",
+    "category": "Income",
+    "icon": "Gift",
+    "color": "green"
+  },
+  {
+    "id": "TXN-2024-081",
+    "date": "2024-09-15",
+    "type": "Employer Contribution",
+    "description": "Quarterly superannuation guarantee",
+    "amount": 850.00,
+    "product": "FirstChoice Employer Super",
+    "status": "Completed",
+    "category": "Contribution",
+    "icon": "ArrowDownCircle",
+    "color": "green"
+  },
+  {
+    "id": "TXN-2024-080",
+    "date": "2024-09-15",
+    "type": "Personal Contribution",
+    "description": "Monthly personal contribution",
+    "amount": 200.00,
+    "product": "FirstChoice Employer Super",
+    "status": "Completed",
+    "category": "Contribution",
+    "icon": "PlusCircle",
+    "color": "green"
+  },
+  {
+    "id": "TXN-2024-079",
+    "date": "2024-09-10",
+    "type": "Fee",
+    "description": "Investment management fee",
+    "amount": -18.75,
+    "product": "Growth Investment Portfolio",
+    "status": "Completed",
+    "category": "Fee",
+    "icon": "DollarSign",
+    "color": "red"
+  },
+  {
+    "id": "TXN-2024-078",
+    "date": "2024-09-05",
+    "type": "Investment",
+    "description": "Monthly investment - Conservative Fund",
+    "amount": 300.00,
+    "product": "Conservative Balanced Fund",
+    "status": "Completed",
+    "category": "Investment",
+    "icon": "TrendingUp",
+    "color": "blue"
+  }
+]

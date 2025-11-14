@@ -1,0 +1,150 @@
+{
+  "id": "USR-2024-001",
+  "firstName": "Alex",
+  "lastName": "Chen",
+  "email": "alex.chen@email.com",
+  "memberSince": "2019-03-15",
+  "dateOfBirth": "1996-07-22",
+  "age": 28,
+  "occupation": "Marketing Manager",
+  "investmentLevel": "Intermediate",
+  "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=Alex",
+  
+  "portfolio": {
+    "totalValue": 142750.50,
+    "cashBalance": 2500.00,
+    "growthThisYear": 12.5,
+    "growthAmount": 15875.50,
+    "lastUpdated": "2024-10-19T15:30:00Z"
+  },
+  
+  "products": [
+    {
+      "id": "PROD-001",
+      "type": "Superannuation",
+      "name": "FirstChoice Employer Super",
+      "balance": 95250.75,
+      "growth": 8.2,
+      "contributions": {
+        "employer": 850.00,
+        "personal": 200.00,
+        "frequency": "monthly"
+      }
+    },
+    {
+      "id": "PROD-002",
+      "type": "Managed Fund",
+      "name": "Growth Investment Portfolio",
+      "balance": 35000.00,
+      "growth": 15.3,
+      "riskLevel": "Moderate-High"
+    },
+    {
+      "id": "PROD-003",
+      "type": "Managed Fund",
+      "name": "Conservative Balanced Fund",
+      "balance": 12500.00,
+      "growth": 5.8,
+      "riskLevel": "Low-Moderate"
+    }
+  ],
+  
+  "recentActivity": [
+    {
+      "id": "TXN-001",
+      "date": "2024-10-15",
+      "type": "Employer Contribution",
+      "amount": 850.00,
+      "product": "FirstChoice Employer Super",
+      "status": "Completed"
+    },
+    {
+      "id": "TXN-002",
+      "date": "2024-10-15",
+      "type": "Personal Contribution",
+      "amount": 200.00,
+      "product": "FirstChoice Employer Super",
+      "status": "Completed"
+    },
+    {
+      "id": "TXN-003",
+      "date": "2024-10-01",
+      "type": "Investment",
+      "amount": 500.00,
+      "product": "Growth Investment Portfolio",
+      "status": "Completed"
+    },
+    {
+      "id": "TXN-004",
+      "date": "2024-09-28",
+      "type": "Rebalance",
+      "amount": 0.00,
+      "product": "All Accounts",
+      "status": "Completed"
+    },
+    {
+      "id": "TXN-005",
+      "date": "2024-09-15",
+      "type": "Employer Contribution",
+      "amount": 850.00,
+      "product": "FirstChoice Employer Super",
+      "status": "Completed"
+    }
+  ],
+  
+  "goals": [
+    {
+      "id": "GOAL-001",
+      "name": "Retirement Fund",
+      "targetAmount": 500000,
+      "currentAmount": 95250.75,
+      "progress": 19.05,
+      "targetDate": "2055-07-01"
+    },
+    {
+      "id": "GOAL-002",
+      "name": "House Deposit",
+      "targetAmount": 100000,
+      "currentAmount": 47500.00,
+      "progress": 47.5,
+      "targetDate": "2027-01-01"
+    }
+  ],
+  
+  "insurance": {
+    "hasInsurance": true,
+    "deathCover": 250000,
+    "tpdCover": 250000,
+    "incomeCover": 5000,
+    "monthlyPremium": 45.50
+  },
+  
+  "beneficiaries": [
+    {
+      "name": "Sarah Chen",
+      "relationship": "Spouse",
+      "percentage": 100
+    }
+  ],
+  
+  "preferences": {
+    "communicationMethod": "Email",
+    "newsletter": true,
+    "paperStatements": false,
+    "twoFactorAuth": true,
+    "notifications": {
+      "contributions": true,
+      "marketUpdates": false,
+      "productChanges": true,
+      "accountActivity": true
+    }
+  },
+  
+  "riskProfile": {
+    "category": "Moderate",
+    "score": 6,
+    "lastAssessed": "2024-01-15",
+    "timeHorizon": "Long-term (20+ years)",
+    "investmentKnowledge": "Intermediate"
+  }
+}
