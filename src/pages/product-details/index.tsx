@@ -12,7 +12,9 @@ import {
   Edit2,
   Trash2,
   AlertCircle,
-  Check
+  Check,
+  FileText,
+  ClipboardList
 } from 'lucide-react';
 import './styles/product-details.css';
 import Button from './components/ui/Button';
@@ -32,6 +34,7 @@ import {
   type Beneficiary,
   type BeneficiaryInput
 } from '../../common/services/beneficiaryService';
+import { supabase } from '../../common/config/supabase';
 
 const ProductDetails = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -43,12 +46,18 @@ const ProductDetails = () => {
   const [productType, setProductType] = useState<'superannuation' | 'financial_product'>('superannuation');
   const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([]);
   const [allocationTotal, setAllocationTotal] = useState(0);
+  const [draftBeneficiaries, setDraftBeneficiaries] = useState<any[]>([]);
+  const [isDraftsLoading, setIsDraftsLoading] = useState(false);
   
   // Modal states
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDraftListModal, setShowDraftListModal] = useState(false);
+  const [showDraftDetailModal, setShowDraftDetailModal] = useState(false);
+  const [showConfirmDraftModal, setShowConfirmDraftModal] = useState(false);
   const [selectedBeneficiary, setSelectedBeneficiary] = useState<Beneficiary | null>(null);
+  const [selectedDraft, setSelectedDraft] = useState<any | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   
   // Form state
@@ -111,6 +120,20 @@ const ProductDetails = () => {
         // Calculate total allocation
         const total = beneficiariesData.reduce((sum, b) => sum + Number(b.allocation_percentage), 0);
         setAllocationTotal(total);
+
+        // Fetch draft beneficiaries for this product
+        setIsDraftsLoading(true);
+        const { data: drafts } = await supabase
+          .from('draft_beneficiaries')
+          .select('*')
+          .eq('product_id', productId)
+          .eq('product_type', type)
+          .order('created_at', { ascending: false });
+        
+        if (drafts) {
+          setDraftBeneficiaries(drafts);
+        }
+        setIsDraftsLoading(false);
 
       } catch (error) {
         console.error('Error fetching product:', error);
@@ -261,6 +284,200 @@ const ProductDetails = () => {
     }
   };
 
+  // Draft Beneficiary Handlers
+  const handleViewDraft = (draft: any) => {
+    setSelectedDraft(draft);
+    setBeneficiaryForm({
+      product_type: draft.product_type,
+      product_id: draft.product_id,
+      full_name: draft.full_name || '',
+      relationship: draft.relationship || '',
+      date_of_birth: draft.date_of_birth || '',
+      email: draft.email || '',
+      phone: draft.phone || '',
+      address_line1: draft.address_line1 || '',
+      address_line2: draft.address_line2 || '',
+      city: draft.city || '',
+      state: draft.state || '',
+      postcode: draft.postcode || '',
+      country: draft.country || 'Australia',
+      tfn: draft.tfn || '',
+      allocation_percentage: draft.allocation_percentage || 0,
+      beneficiary_type: draft.beneficiary_type || 'non_binding',
+      priority: draft.priority || 'primary',
+    });
+    setShowDraftListModal(false);
+    setShowDraftDetailModal(true);
+  };
+
+  const handleSaveDraftChanges = async () => {
+    if (!selectedDraft) return;
+
+    try {
+      setIsSaving(true);
+      const { error } = await supabase
+        .from('draft_beneficiaries')
+        .update({
+          full_name: beneficiaryForm.full_name,
+          relationship: beneficiaryForm.relationship,
+          date_of_birth: beneficiaryForm.date_of_birth,
+          email: beneficiaryForm.email,
+          phone: beneficiaryForm.phone,
+          address_line1: beneficiaryForm.address_line1,
+          address_line2: beneficiaryForm.address_line2,
+          city: beneficiaryForm.city,
+          state: beneficiaryForm.state,
+          postcode: beneficiaryForm.postcode,
+          country: beneficiaryForm.country,
+          tfn: beneficiaryForm.tfn,
+          allocation_percentage: beneficiaryForm.allocation_percentage,
+          beneficiary_type: beneficiaryForm.beneficiary_type,
+          priority: beneficiaryForm.priority,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', selectedDraft.id);
+
+      if (error) throw error;
+
+      // Refresh drafts
+      const { data: drafts } = await supabase
+        .from('draft_beneficiaries')
+        .select('*')
+        .eq('product_id', productId)
+        .eq('product_type', productType)
+        .order('created_at', { ascending: false });
+      
+      if (drafts) {
+        setDraftBeneficiaries(drafts);
+      }
+
+      showToast('Draft updated successfully!', 'success');
+    } catch (error) {
+      console.error('Error updating draft:', error);
+      showToast('Failed to update draft', 'error');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleInitiateConfirmDraft = () => {
+    // Validate allocation doesn't exceed 100%
+    const newTotal = allocationTotal + Number(beneficiaryForm.allocation_percentage);
+    if (newTotal > 100) {
+      showToast(`Total allocation cannot exceed 100%. Current total: ${allocationTotal}%`, 'error');
+      return;
+    }
+    
+    // Show confirmation modal
+    setShowConfirmDraftModal(true);
+  };
+
+  const handleConfirmDraft = async () => {
+    if (!selectedDraft) return;
+
+    try {
+      setIsSaving(true);
+      const sessionUser = getCurrentUser();
+      if (!sessionUser) return;
+
+      // Add to beneficiaries table
+      const result = await addBeneficiary(beneficiaryForm, sessionUser.id);
+
+      if (result.success && result.beneficiary) {
+        // Update call_session with confirmed_beneficiary_id
+        await supabase
+          .from('call_sessions')
+          .update({ 
+            confirmed_beneficiary_id: result.beneficiary.id,
+            final_action: 'directly_confirmed'
+          })
+          .eq('draft_beneficiary_id', selectedDraft.id);
+
+        // Delete draft
+        await supabase
+          .from('draft_beneficiaries')
+          .delete()
+          .eq('id', selectedDraft.id);
+
+        // Refresh data
+        const beneficiariesData = await getBeneficiariesByProduct(productType, productId!);
+        setBeneficiaries(beneficiariesData);
+        const total = beneficiariesData.reduce((sum, b) => sum + Number(b.allocation_percentage), 0);
+        setAllocationTotal(total);
+
+        const { data: drafts } = await supabase
+          .from('draft_beneficiaries')
+          .select('*')
+          .eq('product_id', productId)
+          .eq('product_type', productType)
+          .order('created_at', { ascending: false });
+        
+        if (drafts) {
+          setDraftBeneficiaries(drafts);
+        }
+
+        setShowConfirmDraftModal(false);
+        setShowDraftDetailModal(false);
+        setSelectedDraft(null);
+        showToast('Beneficiary confirmed and added successfully!', 'success');
+      } else {
+        showToast(result.error || 'Failed to add beneficiary', 'error');
+      }
+    } catch (error) {
+      console.error('Error confirming draft:', error);
+      showToast('Failed to confirm draft', 'error');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleDeleteDraft = async (draft: any) => {
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this draft? This action cannot be undone.'
+    );
+
+    if (!confirmed) return;
+
+    try {
+      // Update call_session final_action if this draft is linked to a call
+      await supabase
+        .from('call_sessions')
+        .update({ final_action: 'cancelled' })
+        .eq('draft_beneficiary_id', draft.id);
+
+      // Delete draft
+      const { error } = await supabase
+        .from('draft_beneficiaries')
+        .delete()
+        .eq('id', draft.id);
+
+      if (error) throw error;
+
+      // Refresh drafts
+      const { data: drafts } = await supabase
+        .from('draft_beneficiaries')
+        .select('*')
+        .eq('product_id', productId)
+        .eq('product_type', productType)
+        .order('created_at', { ascending: false });
+      
+      if (drafts) {
+        setDraftBeneficiaries(drafts);
+      }
+
+      showToast('Draft deleted successfully', 'success');
+    } catch (error) {
+      console.error('Error deleting draft:', error);
+      showToast('Failed to delete draft', 'error');
+    }
+  };
+
+  const calculateDraftCompletion = (draft: any) => {
+    const requiredFields = ['full_name', 'relationship', 'date_of_birth', 'allocation_percentage'];
+    const filledRequired = requiredFields.filter(field => draft[field]).length;
+    return Math.round((filledRequired / requiredFields.length) * 100);
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 flex items-center justify-center">
@@ -391,10 +608,25 @@ const ProductDetails = () => {
                   Manage who receives this product in the event of your passing
                 </p>
               </div>
-              <Button onClick={handleAddBeneficiary} disabled={isComplete}>
-                <Plus className="w-4 h-4 mr-2" />
-                Add Beneficiary
-              </Button>
+              <div className="flex items-center gap-3">
+                {draftBeneficiaries.length > 0 && (
+                  <Button
+                    onClick={() => setShowDraftListModal(true)}
+                    variant="secondary"
+                    className="relative"
+                  >
+                    <ClipboardList className="w-4 h-4 mr-2" />
+                    View Drafts
+                    <Badge className="ml-2 bg-blue-600 text-white">
+                      {draftBeneficiaries.length}
+                    </Badge>
+                  </Button>
+                )}
+                <Button onClick={handleAddBeneficiary} disabled={isComplete}>
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Beneficiary
+                </Button>
+              </div>
             </div>
 
             {/* Allocation Summary */}
@@ -1209,6 +1441,298 @@ const ProductDetails = () => {
                 disabled={isSaving}
               >
                 {isSaving ? 'Removing...' : 'Yes, Remove'}
+              </Button>
+            </div>
+          </div>
+        </Modal>
+
+        {/* Draft List Modal */}
+        <Modal
+          isOpen={showDraftListModal}
+          onClose={() => setShowDraftListModal(false)}
+          title="Draft Beneficiaries"
+        >
+          <div className="space-y-4 max-h-[60vh] overflow-y-auto">
+            {isDraftsLoading ? (
+              <div className="text-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-3"></div>
+                <p className="text-gray-600">Loading drafts...</p>
+              </div>
+            ) : draftBeneficiaries.length === 0 ? (
+              <div className="text-center py-8">
+                <FileText className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                <p className="text-gray-600">No draft beneficiaries found</p>
+              </div>
+            ) : (
+              draftBeneficiaries.map((draft) => {
+                const completion = calculateDraftCompletion(draft);
+                return (
+                  <div
+                    key={draft.id}
+                    className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors"
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-gray-900">
+                          {draft.full_name || 'Unnamed'}
+                        </h3>
+                        <p className="text-sm text-gray-600">
+                          {draft.relationship || 'No relationship specified'} • {draft.allocation_percentage || 0}% allocation
+                        </p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          Created: {new Date(draft.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <Badge variant={completion === 100 ? 'success' : 'warning'}>
+                        {completion}% Complete
+                      </Badge>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        onClick={() => handleViewDraft(draft)}
+                        className="flex-1"
+                      >
+                        <Edit2 className="w-4 h-4 mr-1" />
+                        View & Edit
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="danger"
+                        onClick={() => handleDeleteDraft(draft)}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </Modal>
+
+        {/* Draft Detail/Edit Modal */}
+        <Modal
+          isOpen={showDraftDetailModal}
+          onClose={() => {
+            setShowDraftDetailModal(false);
+            setSelectedDraft(null);
+          }}
+          title="Edit Draft Beneficiary"
+        >
+          <div className="space-y-6 max-h-[70vh] overflow-y-auto pr-2">
+            {/* Important Notice */}
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+              <div className="flex">
+                <AlertCircle className="h-5 w-5 text-yellow-400 mr-3 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="text-sm font-medium text-yellow-800">Draft Beneficiary</h3>
+                  <p className="mt-1 text-sm text-yellow-700">
+                    This is a draft created from an AI call. Review and edit the information before confirming.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Personal Information */}
+            <div className="space-y-4">
+              <h3 className="font-semibold text-gray-900 pb-2 border-b">Personal Information</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Input
+                  label="Full Name *"
+                  value={beneficiaryForm.full_name}
+                  onChange={(e) => setBeneficiaryForm({ ...beneficiaryForm, full_name: e.target.value })}
+                  required
+                />
+                <Input
+                  label="Relationship *"
+                  value={beneficiaryForm.relationship}
+                  onChange={(e) => setBeneficiaryForm({ ...beneficiaryForm, relationship: e.target.value })}
+                  required
+                  placeholder="e.g., Spouse, Child, Parent"
+                />
+                <Input
+                  label="Date of Birth *"
+                  type="date"
+                  value={beneficiaryForm.date_of_birth}
+                  onChange={(e) => setBeneficiaryForm({ ...beneficiaryForm, date_of_birth: e.target.value })}
+                  required
+                />
+                <Input
+                  label="Tax File Number (TFN)"
+                  value={beneficiaryForm.tfn}
+                  onChange={(e) => setBeneficiaryForm({ ...beneficiaryForm, tfn: e.target.value })}
+                  placeholder="123 456 789"
+                />
+              </div>
+            </div>
+
+            {/* Contact Information */}
+            <div className="space-y-4">
+              <h3 className="font-semibold text-gray-900 pb-2 border-b">Contact Information</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Input
+                  label="Email Address"
+                  type="email"
+                  value={beneficiaryForm.email}
+                  onChange={(e) => setBeneficiaryForm({ ...beneficiaryForm, email: e.target.value })}
+                  placeholder="example@email.com"
+                />
+                <Input
+                  label="Phone Number"
+                  type="tel"
+                  value={beneficiaryForm.phone}
+                  onChange={(e) => setBeneficiaryForm({ ...beneficiaryForm, phone: e.target.value })}
+                  placeholder="0412 345 678"
+                />
+              </div>
+            </div>
+
+            {/* Address */}
+            <div className="space-y-4">
+              <h3 className="font-semibold text-gray-900 pb-2 border-b">Residential Address *</h3>
+              <Input
+                label="Address Line 1 *"
+                value={beneficiaryForm.address_line1}
+                onChange={(e) => setBeneficiaryForm({ ...beneficiaryForm, address_line1: e.target.value })}
+                required
+                placeholder="Street address, P.O. box"
+              />
+              <Input
+                label="Address Line 2"
+                value={beneficiaryForm.address_line2}
+                onChange={(e) => setBeneficiaryForm({ ...beneficiaryForm, address_line2: e.target.value })}
+                placeholder="Apartment, suite, unit, building, floor, etc."
+              />
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <Input
+                  label="City *"
+                  value={beneficiaryForm.city}
+                  onChange={(e) => setBeneficiaryForm({ ...beneficiaryForm, city: e.target.value })}
+                  required
+                />
+                <Input
+                  label="State *"
+                  value={beneficiaryForm.state}
+                  onChange={(e) => setBeneficiaryForm({ ...beneficiaryForm, state: e.target.value })}
+                  required
+                  placeholder="NSW, VIC, QLD..."
+                />
+                <Input
+                  label="Postcode *"
+                  value={beneficiaryForm.postcode}
+                  onChange={(e) => setBeneficiaryForm({ ...beneficiaryForm, postcode: e.target.value })}
+                  required
+                  placeholder="2000"
+                />
+              </div>
+              <Input
+                label="Country"
+                value={beneficiaryForm.country}
+                onChange={(e) => setBeneficiaryForm({ ...beneficiaryForm, country: e.target.value })}
+                placeholder="Australia"
+              />
+            </div>
+
+            {/* Nomination Details */}
+            <div className="space-y-4">
+              <h3 className="font-semibold text-gray-900 pb-2 border-b">Nomination Details</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Input
+                  label="Allocation % *"
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={beneficiaryForm.allocation_percentage}
+                  onChange={(e) => setBeneficiaryForm({ ...beneficiaryForm, allocation_percentage: Number(e.target.value) })}
+                  required
+                />
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Type
+                  </label>
+                  <select
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    value={beneficiaryForm.beneficiary_type}
+                    onChange={(e) => setBeneficiaryForm({ ...beneficiaryForm, beneficiary_type: e.target.value as 'binding' | 'non_binding' })}
+                  >
+                    <option value="non_binding">Non-Binding</option>
+                    <option value="binding">Binding</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Priority
+                  </label>
+                  <select
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                    value={beneficiaryForm.priority}
+                    onChange={(e) => setBeneficiaryForm({ ...beneficiaryForm, priority: e.target.value as 'primary' | 'contingent' })}
+                  >
+                    <option value="primary">Primary</option>
+                    <option value="contingent">Contingent</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3 pt-4 border-t">
+              <Button
+                variant="secondary"
+                onClick={handleSaveDraftChanges}
+                className="flex-1"
+                disabled={isSaving}
+              >
+                {isSaving ? 'Saving...' : 'Save Changes'}
+              </Button>
+              <Button
+                variant="primary"
+                onClick={handleInitiateConfirmDraft}
+                className="flex-1"
+                disabled={isSaving || !beneficiaryForm.full_name || !beneficiaryForm.relationship || 
+                  !beneficiaryForm.date_of_birth || !beneficiaryForm.address_line1 || 
+                  !beneficiaryForm.city || !beneficiaryForm.state || !beneficiaryForm.postcode}
+              >
+                Confirm & Add Beneficiary
+              </Button>
+            </div>
+          </div>
+        </Modal>
+
+        {/* Confirm Draft Modal */}
+        <Modal
+          isOpen={showConfirmDraftModal}
+          onClose={() => setShowConfirmDraftModal(false)}
+          title="Confirm Beneficiary"
+        >
+          <div className="text-center py-4">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Check className="w-8 h-8 text-green-600" />
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              Add Beneficiary?
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Add <strong>{beneficiaryForm.full_name}</strong> as beneficiary with{' '}
+              <strong>{beneficiaryForm.allocation_percentage}%</strong> allocation?
+            </p>
+            <div className="flex gap-3">
+              <Button
+                variant="secondary"
+                onClick={() => setShowConfirmDraftModal(false)}
+                className="flex-1"
+                disabled={isSaving}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="primary"
+                onClick={handleConfirmDraft}
+                className="flex-1"
+                disabled={isSaving}
+              >
+                {isSaving ? 'Adding...' : 'Yes, Add Beneficiary'}
               </Button>
             </div>
           </div>

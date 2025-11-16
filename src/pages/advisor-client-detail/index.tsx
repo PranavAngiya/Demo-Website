@@ -10,10 +10,12 @@ import {
 } from 'lucide-react';
 import Card from '../dashboard/components/ui/Card';
 import Badge from '../dashboard/components/ui/Badge';
+import CallConfirmationModal from '../../common/components/modals/CallConfirmationModal';
 import { supabase } from '../../common/config/supabase';
 import { getUserById } from '../../common/services/userService';
 import { getClientSuperAccounts, getClientFinancialProducts } from '../../common/services/productService';
 import { getBeneficiariesByProduct } from '../../common/services/beneficiaryService';
+import { createCallSession } from '../../common/services/callSessionService';
 import { unassignClient } from '../../common/services/advisorService';
 import { getCurrentUser } from '../../common/services/authService';
 import { useToast } from '../../common/context/ToastContext';
@@ -31,6 +33,11 @@ const AdvisorClientDetail = () => {
   const [expandedProducts, setExpandedProducts] = useState<Record<string, boolean>>({});
   const [productBeneficiaries, setProductBeneficiaries] = useState<Record<string, any[]>>({});
   const [isClientAssignedToMe, setIsClientAssignedToMe] = useState(false);
+  
+  // Call initiation modal state
+  const [isCallModalOpen, setIsCallModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [isInitiatingCall, setIsInitiatingCall] = useState(false);
 
   useEffect(() => {
     const fetchClientData = async () => {
@@ -141,6 +148,61 @@ const AdvisorClientDetail = () => {
     } catch (error) {
       console.error('Error unassigning client:', error);
       showToast('An error occurred while unassigning client', 'error');
+    }
+  };
+
+  /**
+   * Open call confirmation modal for a specific product
+   */
+  const handleInitiateCall = (product: any) => {
+    setSelectedProduct(product);
+    setIsCallModalOpen(true);
+  };
+
+  /**
+   * Confirm and create call session
+   */
+  const handleConfirmCall = async () => {
+    if (!clientId || !selectedProduct) return;
+
+    setIsInitiatingCall(true);
+
+    try {
+      const currentUser = getCurrentUser();
+      if (!currentUser) {
+        showToast('You must be logged in to initiate a call', 'error');
+        return;
+      }
+
+      // Create call session
+      const result = await createCallSession({
+        advisor_id: currentUser.id,
+        client_id: clientId,
+        product_type: selectedProduct.product_type || 'superannuation',
+        product_id: selectedProduct.id,
+      });
+
+      if (!result.success || !result.callSession) {
+        showToast(result.error || 'Failed to create call session', 'error');
+        return;
+      }
+
+      const callSessionId = result.callSession.id;
+
+      showToast('Call initiated successfully', 'success');
+      
+      // Close modal
+      setIsCallModalOpen(false);
+      setSelectedProduct(null);
+
+      // Navigate to monitoring dashboard
+      navigate(`/advisor/call/${callSessionId}`);
+
+    } catch (error) {
+      console.error('Error initiating call:', error);
+      showToast('Failed to initiate call. Please try again.', 'error');
+    } finally {
+      setIsInitiatingCall(false);
     }
   };
 
@@ -521,7 +583,7 @@ const AdvisorClientDetail = () => {
                               <div className="text-center py-4">
                                 <p className="text-sm text-gray-500 italic mb-3">No beneficiaries nominated for this account</p>
                                 <button
-                                  onClick={() => showToast('Please call the client to assign beneficiaries for this account', 'info')}
+                                  onClick={() => handleInitiateCall(account)}
                                   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 mx-auto"
                                 >
                                   <PhoneCall className="w-4 h-4" />
@@ -612,7 +674,7 @@ const AdvisorClientDetail = () => {
                               <div className="text-center py-4">
                                 <p className="text-sm text-gray-500 italic mb-3">No beneficiaries nominated for this product</p>
                                 <button
-                                  onClick={() => showToast('Please call the client to assign beneficiaries for this product', 'info')}
+                                  onClick={() => handleInitiateCall(product)}
                                   className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2 mx-auto"
                                 >
                                   <PhoneCall className="w-4 h-4" />
@@ -631,6 +693,22 @@ const AdvisorClientDetail = () => {
           )}
         </motion.div>
       </div>
+
+      {/* Call Confirmation Modal */}
+      {selectedProduct && (
+        <CallConfirmationModal
+          isOpen={isCallModalOpen}
+          onClose={() => {
+            setIsCallModalOpen(false);
+            setSelectedProduct(null);
+          }}
+          onConfirm={handleConfirmCall}
+          clientName={client.full_name}
+          productName={selectedProduct.name || selectedProduct.account_name || 'Product'}
+          productType={selectedProduct.product_type || 'superannuation'}
+          isLoading={isInitiatingCall}
+        />
+      )}
     </div>
   );
 };

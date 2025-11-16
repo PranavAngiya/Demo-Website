@@ -1,15 +1,16 @@
 # CFS Member Portal - Complete Integration 🏦✨
 
-A comprehensive member portal for Colonial First State (CFS) that integrates **Training Hub**, **Customer Care**, and **AI-powered Chatbot** features from the original CFS_Demo project into a modern React TypeScript application.
+A comprehensive member portal for Colonial First State (CFS) that integrates **Training Hub**, **Customer Care**, **AI-powered Chatbot**, and **AI Call System** features from the original CFS_Demo project into a modern React TypeScript application.
 
 > **Status**: ✅ **COMPLETE** - All 8 Chapters Implemented
 
 ## 🎯 Project Overview
 
-This project successfully integrates three major systems from CFS_Demo:
+This project successfully integrates four major systems from CFS_Demo:
 1. **Training Hub** - Interactive training modules, quizzes, flashcards, and cheat sheets
 2. **Customer Care** - Guided workflows and procedures for customer service agents
 3. **AI Chatbot** - OpenAI GPT-4 powered assistant with FAQ matching
+4. **AI Call System** - Real-time voice call system for automated beneficiary data collection
 
 ## ✨ Features
 
@@ -36,6 +37,27 @@ This project successfully integrates three major systems from CFS_Demo:
 - **Floating Button**: Accessible from any page
 - **Beautiful UI**: Gradient backgrounds, smooth animations, professional design
 
+### 📞 AI Call System
+- **Real-time Voice Calls**: WebRTC audio capture with AI-powered voice assistance
+- **Call Notifications**: Header dropdown notifications for incoming calls
+- **2FA Consent System**: Secure data collection authorization flow
+- **Live Monitoring**: Advisor dashboard with real-time transcript and field extraction
+- **Beneficiary Data Collection**: Automated extraction of beneficiary information
+- **Draft Management**: Review and confirm AI-collected beneficiary data
+- **Call History**: Complete call logs with transcripts and extracted data
+- **Dev Mode Simulators**: Test all features without backend (mock data buttons)
+- **Production Ready**: WebSocket infrastructure ready for 11Labs/Gemini integration
+
+**Key Features:**
+- Bidirectional audio streaming (16kHz PCM, ScriptProcessorNode)
+- Real-time transcript display for both client and advisor
+- Field extraction with progress tracking (15 beneficiary fields)
+- Draft beneficiary review with edit and confirm workflow
+- Supabase Realtime for instant synchronization
+- Browser navigation protection during active calls
+- Comprehensive error handling and graceful failures
+- Cross-browser compatibility (Chrome, Firefox, Edge)
+
 ### 🎨 Design System
 - **CFS Brand Colors**: Blue (#0066CC), Accent (#00AEEF), Deep (#003366)
 - **Component Library**: Button, Card, Badge, Input, Spinner, etc.
@@ -53,6 +75,9 @@ This project successfully integrates three major systems from CFS_Demo:
 - **Routing**: React Router v6
 - **AI**: OpenAI GPT-4 API
 - **State**: React Context API
+- **Database**: Supabase (PostgreSQL + Realtime)
+- **Audio**: Web Audio API (getUserMedia, AudioContext, ScriptProcessorNode)
+- **WebSocket**: Custom mock service (production-ready for 11Labs/Gemini)
 - **Content**: Real CFS_Demo training-content.json (363KB)
 
 ## 📦 Installation
@@ -82,17 +107,41 @@ npm run preview
 Create a `.env` file in the root directory:
 
 ```bash
+# Supabase Configuration (required for AI Call System)
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your_anon_key_here
+
 # OpenAI API Key (required for chatbot)
 VITE_OPENAI_API_KEY=sk-proj-your-api-key-here
+
+# AI Call System - Development Mode
+VITE_DEV_MODE=true
+VITE_ENABLE_AUDIO_LOOPBACK=true
+
+# AI Call System - Backend (Leave blank for dev mode)
+# VITE_WEBSOCKET_URL=
+# VITE_ELEVEN_LABS_API_KEY=
+# VITE_GEMINI_API_KEY=
 ```
 
-### Getting an OpenAI API Key:
+### Getting Required Keys:
+
+**Supabase (Required for AI Call System):**
+1. Go to [https://supabase.com](https://supabase.com)
+2. Create a new project
+3. Copy Project URL and anon key from Settings → API
+4. Run database migration from `docs/CHAPTER-1-DATABASE-SCHEMA.md`
+
+**OpenAI API Key (Required for chatbot):**
 1. Go to [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)
 2. Sign up or log in
 3. Create a new API key
 4. Copy and paste it into your `.env` file
 
-**Note**: The chatbot will work with FAQ matching even without an API key, but GPT-4 responses require a valid key.
+**Note**: 
+- The chatbot will work with FAQ matching even without an API key
+- AI Call System works in dev mode without backend (uses mock data)
+- See `docs/DEPLOYMENT-GUIDE.md` for complete setup instructions
 
 ## 🏗️ Project Structure
 

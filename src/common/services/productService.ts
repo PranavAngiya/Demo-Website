@@ -51,14 +51,14 @@ export async function getProductById(productId: string): Promise<FinancialProduc
       .from('financial_products')
       .select('*')
       .eq('id', productId)
-      .single();
+      .maybeSingle(); // Use maybeSingle() instead of single() to handle 0 rows gracefully
 
     if (error) {
       console.error('Error fetching product:', error);
       return null;
     }
 
-    return data as FinancialProduct;
+    return data as FinancialProduct | null;
   } catch (error) {
     console.error('Error in getProductById:', error);
     return null;

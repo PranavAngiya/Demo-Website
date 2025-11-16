@@ -1,16 +1,22 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Home, HelpCircle, GraduationCap, User, Trophy, LogOut } from 'lucide-react';
+import { Menu, X, Home, HelpCircle, GraduationCap, User, Trophy, LogOut, PhoneCall, Bell } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUser } from '../../context/UserContext';
 import { getCurrentUser, logout } from '../../services/authService';
+import { useCallNotifications } from '../../context/CallNotificationContext';
+import { useTwoFANotifications } from '../../context/TwoFANotificationContext';
+import { CallNotificationDropdown } from '../notifications/CallNotificationDropdown';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isCallDropdownOpen, setIsCallDropdownOpen] = useState(false);
   const { user, dbUser } = useUser();
   const location = useLocation();
+  const { incomingCalls } = useCallNotifications();
+  const { pendingTwoFARequests } = useTwoFANotifications();
   
   // Get session user if logged in
   const sessionUser = getCurrentUser();
@@ -84,6 +90,64 @@ const Header = () => {
               </Link>
             ))}
           </div>
+
+          {/* Call & Notification Buttons (Client Only) */}
+          {sessionUser && sessionUser.role === 'client' && (
+            <div className="hidden md:flex items-center gap-2 mr-2">
+              {/* Call Notification Button */}
+              <div className="relative">
+                <motion.button
+                  className={`call-notification-button relative w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
+                    incomingCalls.length > 0
+                      ? 'bg-green-500 hover:bg-green-600 animate-pulse'
+                      : 'bg-gray-100 hover:bg-gray-200'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setIsCallDropdownOpen(!isCallDropdownOpen)}
+                >
+                  <PhoneCall
+                    className={`w-5 h-5 ${
+                      incomingCalls.length > 0 ? 'text-white' : 'text-gray-600'
+                    }`}
+                  />
+                  {incomingCalls.length > 0 && (
+                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                      {incomingCalls.length}
+                    </span>
+                  )}
+                </motion.button>
+
+                {/* Call Notification Dropdown */}
+                <CallNotificationDropdown
+                  isOpen={isCallDropdownOpen}
+                  onClose={() => setIsCallDropdownOpen(false)}
+                />
+              </div>
+
+              {/* 2FA Notification Button */}
+              <motion.button
+                className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
+                  pendingTwoFARequests.length > 0
+                    ? 'bg-orange-500 hover:bg-orange-600 animate-pulse'
+                    : 'bg-gray-100 hover:bg-gray-200'
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Bell
+                  className={`w-5 h-5 ${
+                    pendingTwoFARequests.length > 0 ? 'text-white' : 'text-gray-600'
+                  }`}
+                />
+                {pendingTwoFARequests.length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                    {pendingTwoFARequests.length}
+                  </span>
+                )}
+              </motion.button>
+            </div>
+          )}
 
           {/* User Profile */}
           <div className="hidden md:flex items-center relative">

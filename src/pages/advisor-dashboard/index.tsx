@@ -46,6 +46,14 @@ const AdvisorDashboard = () => {
       stats: `${clientStats.assignedClients} Assigned`
     },
     {
+      title: 'Call History',
+      description: 'View past call sessions and transcripts',
+      icon: Phone,
+      path: '/advisor/call-history',
+      color: 'from-green-500 to-green-600',
+      stats: 'View All Calls'
+    },
+    {
       title: 'Training Hub',
       description: 'Access training modules, quizzes, and learning materials',
       icon: BookOpen,
