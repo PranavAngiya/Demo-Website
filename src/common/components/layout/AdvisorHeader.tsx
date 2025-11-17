@@ -9,10 +9,12 @@ const AdvisorHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const { user } = useUser();
+  const { user, dbUser } = useUser();
   const location = useLocation();
   
-  const displayName = (user as any).full_name || `${(user as any).firstName} ${(user as any).lastName}`;
+  // Display name - prioritize dbUser (real data) over user (which starts as mock data)
+  const displayName = dbUser?.full_name || `${(user as any).firstName} ${(user as any).lastName}`;
+  const displayEmail = dbUser?.email || user.email;
   
   const handleLogout = () => {
     logout();
@@ -187,7 +189,7 @@ const AdvisorHeader = () => {
                     <p className="text-sm font-medium text-gray-900">
                       {displayName}
                     </p>
-                    <p className="text-xs text-gray-600">{user.email}</p>
+                    <p className="text-xs text-gray-600">{displayEmail}</p>
                   </div>
                 </div>
                 <button

@@ -302,41 +302,6 @@ const AdvisorDashboard = () => {
             </div>
           </motion.div>
 
-          {/* Recent Updates (Optional) */}
-          <motion.div variants={itemVariants}>
-            <Card className="p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Getting Started</h2>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-brand/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-bold text-brand">1</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Explore Training Hub</h3>
-                    <p className="text-sm text-gray-600">Complete training modules to enhance your product knowledge</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-brand/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-bold text-brand">2</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Review Customer Care Procedures</h3>
-                    <p className="text-sm text-gray-600">Access step-by-step guides for common customer scenarios</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 bg-brand/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-xs font-bold text-brand">3</span>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Access External Resources</h3>
-                    <p className="text-sm text-gray-600">Visit the external portal for additional advisor tools</p>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          </motion.div>
         </motion.div>
       </div>
     </div>

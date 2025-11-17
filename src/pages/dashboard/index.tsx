@@ -351,8 +351,11 @@ const Dashboard = () => {
                 </Badge>
               </div>
               
-              <h1 className="text-4xl md:text-6xl font-display font-bold mb-3 bg-gradient-to-r from-white to-yellow-100 bg-clip-text text-transparent">
-                Welcome back, {dbUser?.full_name?.split(' ')[0] || (mockUser as any).firstName}! 👋
+              <h1 className="text-4xl md:text-6xl font-display font-bold mb-3">
+                <span className="bg-gradient-to-r from-white to-yellow-100 bg-clip-text text-transparent">
+                  Welcome back, {dbUser?.full_name?.split(' ')[0] || (mockUser as any).firstName}!
+                </span>
+                {' '}<span>👋</span>
               </h1>
               <p className="text-xl md:text-2xl text-white/90 mb-8 font-medium">
                 Your wealth is growing beautifully

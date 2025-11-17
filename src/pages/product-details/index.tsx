@@ -617,9 +617,9 @@ const ProductDetails = () => {
                   >
                     <ClipboardList className="w-4 h-4 mr-2" />
                     View Drafts
-                    <Badge className="ml-2 bg-blue-600 text-white">
+                    <span className="ml-2 inline-flex items-center justify-center w-6 h-6 rounded-full bg-amber-500 text-white text-xs font-bold">
                       {draftBeneficiaries.length}
-                    </Badge>
+                    </span>
                   </Button>
                 )}
                 <Button onClick={handleAddBeneficiary} disabled={isComplete}>

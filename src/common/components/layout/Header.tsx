@@ -13,6 +13,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isCallDropdownOpen, setIsCallDropdownOpen] = useState(false);
+  const [isNotificationDropdownOpen, setIsNotificationDropdownOpen] = useState(false);
   const { user, dbUser } = useUser();
   const location = useLocation();
   const { incomingCalls } = useCallNotifications();
@@ -21,8 +22,9 @@ const Header = () => {
   // Get session user if logged in
   const sessionUser = getCurrentUser();
   
-  // Display name - prioritize dbUser (real data) over mock data
-  const displayName = dbUser?.full_name || (user as any).full_name || `${(user as any).firstName} ${(user as any).lastName}`;
+  // Display name - prioritize dbUser (real data) over user (which starts as mock data)
+  const displayName = dbUser?.full_name || `${(user as any).firstName} ${(user as any).lastName}`;
+  const displayEmail = dbUser?.email || user.email;
   
   // Check if we're in the client portal
   const isClientPortal = location.pathname.startsWith('/client');
@@ -126,26 +128,66 @@ const Header = () => {
               </div>
 
               {/* 2FA Notification Button */}
-              <motion.button
-                className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
-                  pendingTwoFARequests.length > 0
-                    ? 'bg-orange-500 hover:bg-orange-600 animate-pulse'
-                    : 'bg-gray-100 hover:bg-gray-200'
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Bell
-                  className={`w-5 h-5 ${
-                    pendingTwoFARequests.length > 0 ? 'text-white' : 'text-gray-600'
+              <div className="relative">
+                <motion.button
+                  className={`relative w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
+                    pendingTwoFARequests.length > 0
+                      ? 'bg-orange-500 hover:bg-orange-600 animate-pulse'
+                      : 'bg-gray-100 hover:bg-gray-200'
                   }`}
-                />
-                {pendingTwoFARequests.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
-                    {pendingTwoFARequests.length}
-                  </span>
-                )}
-              </motion.button>
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setIsNotificationDropdownOpen(!isNotificationDropdownOpen)}
+                >
+                  <Bell
+                    className={`w-5 h-5 ${
+                      pendingTwoFARequests.length > 0 ? 'text-white' : 'text-gray-600'
+                    }`}
+                  />
+                  {pendingTwoFARequests.length > 0 && (
+                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                      {pendingTwoFARequests.length}
+                    </span>
+                  )}
+                </motion.button>
+
+                {/* Notification Dropdown */}
+                <AnimatePresence>
+                  {isNotificationDropdownOpen && (
+                    <motion.div
+                      className="absolute top-full right-0 mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden z-50"
+                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <div className="p-4 border-b border-gray-200 bg-gradient-to-r from-orange-50 to-amber-50">
+                        <h3 className="font-semibold text-gray-900 flex items-center gap-2">
+                          <Bell className="w-5 h-5 text-orange-600" />
+                          Notifications
+                        </h3>
+                      </div>
+                      
+                      {pendingTwoFARequests.length === 0 ? (
+                        <div className="p-8 text-center">
+                          <Bell className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                          <p className="text-sm text-gray-500 font-medium">No notifications to display</p>
+                          <p className="text-xs text-gray-400 mt-1">You're all caught up!</p>
+                        </div>
+                      ) : (
+                        <div className="max-h-96 overflow-y-auto">
+                          {/* 2FA requests would be listed here */}
+                          <div className="p-4">
+                            <p className="text-sm text-gray-600">
+                              You have {pendingTwoFARequests.length} pending authorization request{pendingTwoFARequests.length > 1 ? 's' : ''}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
           )}
 
@@ -178,7 +220,7 @@ const Header = () => {
                       <p className="text-sm font-semibold text-gray-900">
                         {displayName}
                       </p>
-                      <p className="text-xs text-gray-600">{dbUser?.email || user.email}</p>
+                      <p className="text-xs text-gray-600">{displayEmail}</p>
                     </div>
                   </div>
                   <div className="border-t border-gray-200 py-2 space-y-1">
@@ -263,7 +305,7 @@ const Header = () => {
                     <p className="text-sm font-semibold text-gray-900">
                       {displayName}
                     </p>
-                    <p className="text-xs text-gray-600">{dbUser?.email || sessionUser?.email || user.email}</p>
+                    <p className="text-xs text-gray-600">{displayEmail}</p>
                   </div>
                 </div>
                 
