@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Phone, Search, Filter, Eye, FileText,
-  ChevronLeft, ChevronRight, Copy, ArrowLeft
+  ChevronLeft, ChevronRight, ArrowLeft, Trash2
 } from 'lucide-react';
 import { supabase } from '../../common/config/supabase';
 import { getCurrentUser } from '../../common/services/authService';
@@ -31,9 +31,6 @@ const AdvisorCallHistory = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [callSessions, setCallSessions] = useState<CallSession[]>([]);
   const [filteredSessions, setFilteredSessions] = useState<CallSession[]>([]);
-  const [selectedCall, setSelectedCall] = useState<CallSession | null>(null);
-  const [transcripts, setTranscripts] = useState<any[]>([]);
-  const [draftFields, setDraftFields] = useState<any>(null);
   
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -42,7 +39,6 @@ const AdvisorCallHistory = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState<'date' | 'duration' | 'client'>('date');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const [showDetailModal, setShowDetailModal] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
   const itemsPerPage = 20;
@@ -169,34 +165,57 @@ const AdvisorCallHistory = () => {
     }
   };
 
-  const handleViewDetails = async (session: CallSession) => {
-    setSelectedCall(session);
-    
-    const { data: transcriptData } = await supabase
-      .from('conversation_transcripts')
-      .select('*')
-      .eq('call_session_id', session.id)
-      .order('sequence_number', { ascending: true });
+  const handleDeleteCall = async (session: CallSession) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete this call session with ${session.client_name}?\n\nThis will permanently delete:\n- Call session record\n- All transcripts\n- Draft beneficiary data\n\nThis action cannot be undone.`
+    );
 
-    setTranscripts(transcriptData || []);
+    if (!confirmed) return;
 
-    const { data: draft } = await supabase
-      .from('draft_beneficiaries')
-      .select('*')
-      .eq('call_session_id', session.id)
-      .maybeSingle();
+    try {
+      // Delete related data first (transcripts and drafts)
+      // Supabase should handle cascade deletes if properly configured, but we'll be explicit
+      
+      // Delete transcripts
+      const { error: transcriptError } = await supabase
+        .from('conversation_transcripts')
+        .delete()
+        .eq('call_session_id', session.id);
 
-    setDraftFields(draft);
-    setShowDetailModal(true);
+      if (transcriptError) {
+        console.error('Error deleting transcripts:', transcriptError);
+      }
+
+      // Delete draft beneficiary
+      const { error: draftError } = await supabase
+        .from('draft_beneficiaries')
+        .delete()
+        .eq('call_session_id', session.id);
+
+      if (draftError) {
+        console.error('Error deleting draft:', draftError);
+      }
+
+      // Finally, delete the call session itself
+      const { error: sessionError } = await supabase
+        .from('call_sessions')
+        .delete()
+        .eq('id', session.id);
+
+      if (sessionError) {
+        throw sessionError;
+      }
+
+      showToast('Call session deleted successfully', 'success');
+      
+      // Refresh the call sessions list
+      fetchCallSessions();
+    } catch (error) {
+      console.error('Error deleting call session:', error);
+      showToast('Failed to delete call session', 'error');
+    }
   };
 
-  const copyTranscript = () => {
-    const text = transcripts
-      .map((t) => `[${new Date(t.timestamp).toLocaleTimeString()}] ${t.speaker === 'ai_bot' ? 'AI' : 'Client'}: ${t.message_text}`)
-      .join('\n');
-    navigator.clipboard.writeText(text);
-    showToast('Transcript copied!', 'success');
-  };
 
   const formatDuration = (seconds: number | null) => {
     if (!seconds) return 'N/A';
@@ -385,13 +404,25 @@ const AdvisorCallHistory = () => {
                       <td className="px-6 py-4">{getStatusBadge(session.status)}</td>
                       <td className="px-6 py-4">{getOutcomeBadge(session.final_action)}</td>
                       <td className="px-6 py-4">
-                        <button
-                          onClick={() => handleViewDetails(session)}
-                          className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-primary hover:bg-primary/5 rounded-lg"
-                        >
-                          <Eye className="w-4 h-4" />
-                          View
-                        </button>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => navigate(`/advisor/call/${session.id}`)}
+                            className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-primary hover:bg-primary/5 rounded-lg transition-colors"
+                          >
+                            <Eye className="w-4 h-4" />
+                            View
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteCall(session);
+                            }}
+                            className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            title="Delete call session"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))
@@ -421,83 +452,6 @@ const AdvisorCallHistory = () => {
           )}
         </motion.div>
 
-        {showDetailModal && selectedCall && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col"
-            >
-              <div className="px-6 py-4 border-b flex items-center justify-between">
-                <h2 className="text-xl font-bold">Call Details</h2>
-                <button onClick={() => setShowDetailModal(false)} className="text-gray-400 hover:text-gray-600">✕</button>
-              </div>
-
-              <div className="flex-1 overflow-y-auto p-6 space-y-6">
-                <div className="bg-gray-50 rounded-lg p-4 space-y-3">
-                  <h3 className="font-semibold mb-3">Call Information</h3>
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div><span className="text-gray-600">Client:</span> <span className="ml-2 font-medium">{selectedCall.client_name}</span></div>
-                    <div><span className="text-gray-600">Product:</span> <span className="ml-2 font-medium">{selectedCall.product_name}</span></div>
-                    <div><span className="text-gray-600">Initiated:</span> <span className="ml-2 font-medium">{new Date(selectedCall.initiated_at).toLocaleString()}</span></div>
-                    <div><span className="text-gray-600">Duration:</span> <span className="ml-2 font-medium">{formatDuration(selectedCall.duration_seconds)}</span></div>
-                    <div><span className="text-gray-600">Status:</span> <span className="ml-2">{getStatusBadge(selectedCall.status)}</span></div>
-                    <div><span className="text-gray-600">Outcome:</span> <span className="ml-2">{getOutcomeBadge(selectedCall.final_action)}</span></div>
-                  </div>
-                </div>
-
-                {draftFields && (
-                  <div className="bg-blue-50 rounded-lg p-4">
-                    <h3 className="font-semibold mb-3">Extracted Data</h3>
-                    <div className="grid grid-cols-2 gap-3 text-sm">
-                      {Object.entries(draftFields).map(([key, value]) => {
-                        if (['id', 'call_session_id', 'product_id', 'product_type', 'created_at', 'updated_at', 'confirmed_at', 'extraction_status', 'field_extraction_metadata'].includes(key)) {
-                          return null;
-                        }
-                        return (
-                          <div key={key}>
-                            <span className="text-gray-600 capitalize">{key.replace(/_/g, ' ')}:</span>
-                            <span className="ml-2 font-medium">{value ? String(value) : '-'}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-semibold">Transcript</h3>
-                    <button onClick={copyTranscript} className="text-sm text-primary flex items-center gap-2">
-                      <Copy className="w-4 h-4" /> Copy
-                    </button>
-                  </div>
-                  <div className="space-y-3 max-h-96 overflow-y-auto bg-gray-50 rounded-lg p-4">
-                    {transcripts.length === 0 ? (
-                      <p className="text-gray-500 text-center py-8">No transcript</p>
-                    ) : (
-                      transcripts.map((t) => (
-                        <div key={t.id} className={`p-3 rounded-lg ${t.speaker === 'ai_bot' ? 'bg-primary/10 ml-8' : 'bg-white mr-8'}`}>
-                          <div className="flex justify-between mb-1 text-xs">
-                            <span className="font-medium">{t.speaker === 'ai_bot' ? 'AI' : 'Client'}</span>
-                            <span className="text-gray-500">{new Date(t.timestamp).toLocaleTimeString()}</span>
-                          </div>
-                          <p className="text-sm">{t.message_text}</p>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <div className="px-6 py-4 border-t flex justify-end">
-                <button onClick={() => setShowDetailModal(false)} className="px-4 py-2 border rounded-lg hover:bg-gray-50">
-                  Close
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
       </div>
     </div>
   );

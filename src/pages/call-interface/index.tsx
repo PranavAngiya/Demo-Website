@@ -42,6 +42,8 @@ const CallInterface = (_props: CallInterfaceProps) => {
   const durationIntervalRef = useRef<number | null>(null);
   const audioPlaybackQueueRef = useRef<AudioBuffer[]>([]);
   const audioSourceRef = useRef<AudioBufferSourceNode | null>(null);
+  const audioBufferRef = useRef<Int16Array[]>([]);
+  const silenceTimerRef = useRef<number | null>(null);
   const isEndingCallRef = useRef(false);
 
   /**
@@ -91,52 +93,74 @@ const CallInterface = (_props: CallInterfaceProps) => {
       return;
     }
 
+    // Prevent re-initialization if already connected (React Strict Mode protection)
+    if (websocketService.isActive()) {
+      console.log('⚠️ WebSocket already connected, skipping re-initialization');
+      return;
+    }
+
+    let isCleanedUp = false;
+
     const initializeCall = async () => {
       try {
         // Fetch call session details
         const session = await getCallSessionById(callSessionId);
-        if (!session) {
-          setError('Call session not found');
+        if (!session || isCleanedUp) {
+          if (!isCleanedUp && !session) {
+            setError('Call session not found');
+          }
           return;
         }
 
         // Fetch advisor name
         const advisor = await getUserById(session.advisor_id);
-        if (advisor) {
+        if (advisor && !isCleanedUp) {
           setAdvisorName(advisor.full_name);
         }
 
         // Connect to WebSocket
-        await websocketService.connect(callSessionId);
+        if (!isCleanedUp) {
+          await websocketService.connect(callSessionId);
+        }
         
         // Request microphone permission and start audio
-        await startAudioCapture();
+        if (!isCleanedUp) {
+          await startAudioCapture();
+        }
         
         // Set up WebSocket message listeners
-        websocketService.on('message', handleBackendMessage);
-        websocketService.on('disconnected', handleWebSocketDisconnect);
-        websocketService.on('error', handleWebSocketError);
+        if (!isCleanedUp) {
+          websocketService.on('message', handleBackendMessage);
+          websocketService.on('disconnected', handleWebSocketDisconnect);
+          websocketService.on('error', handleWebSocketError);
+        }
 
         // Update call status to in_progress in database
-        await updateCallSessionStatus(callSessionId, 'in_progress');
+        if (!isCleanedUp) {
+          await updateCallSessionStatus(callSessionId, 'in_progress');
+        }
         
         // Send call accepted message
-        websocketService.sendMessage({
-          type: 'call_accepted',
-          call_session_id: callSessionId,
-          timestamp: Date.now(),
-        });
+        if (!isCleanedUp) {
+          websocketService.sendMessage({
+            type: 'call_accepted',
+            call_session_id: callSessionId,
+            timestamp: Date.now(),
+          });
 
-        setStatus('Connected');
-        setIsLoading(false);
-        
-        // Start duration timer
-        startDurationTimer();
+          setStatus('Connected');
+          setIsLoading(false);
+          
+          // Start duration timer
+          startDurationTimer();
+        }
 
       } catch (err) {
-        console.error('Failed to initialize call:', err);
-        setError('Failed to initialize call');
-        setIsLoading(false);
+        if (!isCleanedUp) {
+          console.error('Failed to initialize call:', err);
+          setError('Failed to initialize call');
+          setIsLoading(false);
+        }
       }
     };
 
@@ -144,11 +168,12 @@ const CallInterface = (_props: CallInterfaceProps) => {
 
     // Cleanup on unmount
     return () => {
+      isCleanedUp = true;
       stopAudioCapture();
       stopDurationTimer();
       websocketService.disconnect();
     };
-  }, [callSessionId]);
+  }, [callSessionId, browserCompatible]);
 
   /**
    * Subscribe to call session status changes via Supabase realtime
@@ -272,8 +297,50 @@ const CallInterface = (_props: CallInterfaceProps) => {
         const inputData = event.inputBuffer.getChannelData(0);
         const audioData = convertFloat32ToInt16(inputData);
 
-        // Send to backend via WebSocket
-        websocketService.sendAudioChunk(audioData.buffer as ArrayBuffer, audioSequenceRef.current++);
+        // Calculate audio level (RMS) to detect speech vs silence
+        let sum = 0;
+        for (let i = 0; i < inputData.length; i++) {
+          sum += inputData[i] * inputData[i];
+        }
+        const rms = Math.sqrt(sum / inputData.length);
+        const isSpeaking = rms > 0.01; // Silence threshold (adjust as needed)
+
+        // Always buffer the audio
+        audioBufferRef.current.push(audioData);
+
+        if (isSpeaking) {
+          // User is speaking - clear any pending silence timer
+          if (silenceTimerRef.current) {
+            clearTimeout(silenceTimerRef.current);
+            silenceTimerRef.current = null;
+          }
+        } else {
+          // Silence detected - start timer if not already running
+          if (!silenceTimerRef.current && audioBufferRef.current.length > 0) {
+            silenceTimerRef.current = window.setTimeout(() => {
+              // User stopped speaking for 400ms - send accumulated audio
+              if (audioBufferRef.current.length > 0) {
+                // Combine all buffered chunks
+                const totalLength = audioBufferRef.current.reduce((sum, chunk) => sum + chunk.length, 0);
+                const combinedBuffer = new Int16Array(totalLength);
+                let offset = 0;
+                
+                for (const chunk of audioBufferRef.current) {
+                  combinedBuffer.set(chunk, offset);
+                  offset += chunk.length;
+                }
+
+                // Send combined buffer
+                websocketService.sendAudioChunk(combinedBuffer.buffer as ArrayBuffer, audioSequenceRef.current++);
+                
+                // Clear buffer
+                audioBufferRef.current = [];
+              }
+              
+              silenceTimerRef.current = null;
+            }, 1500); // Send after 1.5 seconds of silence (natural pause between sentences)
+          }
+        }
       };
 
       source.connect(processor);
@@ -303,6 +370,13 @@ const CallInterface = (_props: CallInterfaceProps) => {
         console.error('Error disconnecting source node:', e);
       }
     }
+
+    // Clear silence timer and flush any remaining audio
+    if (silenceTimerRef.current) {
+      clearTimeout(silenceTimerRef.current);
+      silenceTimerRef.current = null;
+    }
+    audioBufferRef.current = [];
 
     // Disconnect processor
     if (audioProcessorRef.current) {
@@ -356,8 +430,6 @@ const CallInterface = (_props: CallInterfaceProps) => {
    * Handle incoming backend messages
    */
   const handleBackendMessage = (message: BackendMessage) => {
-    console.log('📥 Backend message:', message.type);
-
     switch (message.type) {
       case 'status_change':
         handleStatusChange(message);
@@ -390,22 +462,40 @@ const CallInterface = (_props: CallInterfaceProps) => {
    * Handle audio stream from backend (AI voice)
    */
   const handleAudioStream = async (message: AudioStreamMessage) => {
-
     try {
+      if (!message.audio_data) {
+        console.error('❌ No audio_data in message');
+        return;
+      }
+      
       // Decode base64 audio data
       const binaryString = window.atob(message.audio_data);
-      const bytes = new Uint8Array(binaryString.length);
-      for (let i = 0; i < binaryString.length; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
+      const bytes = new Int16Array(binaryString.length / 2);
+      
+      // Convert binary string to Int16 PCM samples
+      for (let i = 0; i < bytes.length; i++) {
+        const byte1 = binaryString.charCodeAt(i * 2);
+        const byte2 = binaryString.charCodeAt(i * 2 + 1);
+        bytes[i] = (byte2 << 8) | byte1; // Little-endian Int16
       }
 
-      // Create audio context if not exists
+      // Create audio context if not exists (16kHz for 11Labs)
       if (!audioContextRef.current) {
         audioContextRef.current = new AudioContext({ sampleRate: 16000 });
       }
 
-      // Decode audio data
-      const audioBuffer = await audioContextRef.current.decodeAudioData(bytes.buffer);
+      // Create audio buffer from raw PCM Int16 data
+      const audioBuffer = audioContextRef.current.createBuffer(
+        1, // mono
+        bytes.length,
+        16000 // 16kHz sample rate
+      );
+      
+      // Convert Int16 to Float32 for Web Audio API
+      const channelData = audioBuffer.getChannelData(0);
+      for (let i = 0; i < bytes.length; i++) {
+        channelData[i] = bytes[i] / 32768.0; // Normalize to -1.0 to 1.0
+      }
       
       // Add to playback queue
       audioPlaybackQueueRef.current.push(audioBuffer);
@@ -416,7 +506,7 @@ const CallInterface = (_props: CallInterfaceProps) => {
       }
 
     } catch (err) {
-      console.error('Failed to play audio:', err);
+      console.error('❌ Failed to play audio:', err);
     }
   };
 
@@ -430,6 +520,7 @@ const CallInterface = (_props: CallInterfaceProps) => {
     }
 
     const audioBuffer = audioPlaybackQueueRef.current.shift()!;
+    
     const source = audioContextRef.current!.createBufferSource();
     source.buffer = audioBuffer;
     source.connect(audioContextRef.current!.destination);

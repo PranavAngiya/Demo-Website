@@ -11,9 +11,14 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, icon, onClear, className = '', value, ...props }, ref) => {
+  ({ label, error, icon, onClear, className = '', value, placeholder, type, ...props }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
     const hasValue = value !== undefined && value !== '';
+    const hasPlaceholder = placeholder !== undefined && placeholder !== '';
+    const isDateInput = type === 'date' || type === 'time' || type === 'datetime-local';
+    
+    // Label should float when focused, has value, has placeholder, OR is a date/time input
+    const shouldFloat = isFocused || hasValue || hasPlaceholder || isDateInput;
 
     return (
       <div className="w-full">
@@ -22,13 +27,13 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {label && (
             <motion.label
               className={`absolute left-3 pointer-events-none transition-all duration-200 ${
-                isFocused || hasValue
+                shouldFloat
                   ? '-top-2.5 text-xs bg-white px-2 text-brand font-medium'
                   : 'top-3 text-base text-gray-500'
               }`}
               initial={false}
               animate={{
-                y: isFocused || hasValue ? 0 : 0,
+                y: shouldFloat ? 0 : 0,
               }}
             >
               {label}
@@ -45,7 +50,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {/* Input */}
           <input
             ref={ref}
+            type={type}
             value={value}
+            placeholder={placeholder}
             className={`
               w-full px-4 py-3 
               ${icon ? 'pl-10' : ''} 

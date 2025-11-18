@@ -124,6 +124,65 @@ const AdvisorCallMonitor = () => {
   }, [callSessionId]);
 
   /**
+   * Load existing transcripts
+   */
+  useEffect(() => {
+    if (!callSessionId) return;
+
+    const loadTranscripts = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('conversation_transcripts')
+          .select('*')
+          .eq('call_session_id', callSessionId)
+          .order('created_at', { ascending: true });
+
+        if (error) {
+          console.error('Error loading transcripts:', error);
+        } else if (data) {
+          console.log('📝 Loaded', data.length, 'existing transcript messages');
+          setTranscripts(data);
+        }
+      } catch (error) {
+        console.error('Error fetching transcripts:', error);
+      }
+    };
+
+    loadTranscripts();
+  }, [callSessionId]);
+
+  /**
+   * Load existing draft beneficiary data
+   */
+  useEffect(() => {
+    if (!callSessionId) return;
+
+    const loadDraftData = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('draft_beneficiaries')
+          .select('*')
+          .eq('call_session_id', callSessionId)
+          .maybeSingle();
+
+        if (error) {
+          console.error('Error loading draft beneficiary:', error);
+        } else if (data) {
+          console.log('✍️ Loaded existing draft beneficiary data');
+          setDraftFields(data);
+          calculateCompletion(data);
+        } else {
+          console.log('ℹ️ No draft beneficiary found for this call');
+        }
+      } catch (error) {
+        console.error('Error fetching draft beneficiary:', error);
+      }
+    };
+
+    loadDraftData();
+  }, [callSessionId]);
+
+  /**
    * Real-time subscriptions to call_sessions and conversation_transcripts
    */
   useEffect(() => {
@@ -512,6 +571,11 @@ const AdvisorCallMonitor = () => {
   const getProgressSteps = () => {
     if (!callSession) return [];
 
+    // Determine if data has been collected (any field populated in draft)
+    const hasData = Object.values(draftFields).some(val => val !== null && val !== undefined && val !== '');
+    const hasConfirmation = callSession.data_collection_status === 'completed';
+    const isCallCompleted = callSession.status === 'completed' || callSession.status === 'cancelled';
+
     const steps = [
       {
         label: 'Waiting for Client',
@@ -530,25 +594,29 @@ const AdvisorCallMonitor = () => {
       {
         label: 'Gathering Information',
         status:
-          callSession.data_collection_status === 'not_started' ? 'pending' :
-          callSession.data_collection_status === 'in_progress' ? 'current' :
-          'completed',
+          callSession.twofa_status !== 'confirmed' ? 'pending' :
+          !hasData && !isCallCompleted ? 'current' :
+          hasData ? 'completed' :
+          'pending',
         icon: MessageSquare,
       },
       {
         label: 'Client Confirming',
-        status: completionPercentage === 100 ? 'completed' : 'pending',
+        status: 
+          !hasData ? 'pending' :
+          hasConfirmation || (isCallCompleted && hasData) ? 'completed' : 
+          'current',
         icon: Check,
       },
       {
-        label: 'Storage Selection',
-        status: callSession.final_action ? 'completed' : 'pending',
+        label: 'Storage Success',
+        status: hasData ? 'completed' : 'pending',
         icon: Database,
       },
       {
         label: callSession.status === 'cancelled' ? 'Call Ended' : 'Success',
         status: 
-          callSession.status === 'completed' ? 'completed' :
+          callSession.status === 'completed' && hasData ? 'completed' :
           callSession.status === 'cancelled' ? 'error' :
           'pending',
         icon: callSession.status === 'cancelled' ? X : CheckCircle,
@@ -963,9 +1031,9 @@ const AdvisorCallMonitor = () => {
                       }`}
                     >
                       <p className="text-sm font-medium mb-1 opacity-75 capitalize">
-                        {message.speaker}
+                        {message.speaker === 'ai_bot' ? 'AI Assistant' : 'Client'}
                       </p>
-                      <p>{message.message}</p>
+                      <p>{message.message_text}</p>
                       <p className="text-xs mt-1 opacity-60">
                         {new Date(message.created_at).toLocaleTimeString()}
                       </p>
